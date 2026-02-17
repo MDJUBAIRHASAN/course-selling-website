@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillForge — Course Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="learn.css">
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <header class="topbar">
+        <div class="topbar__left">
+            <a href="index.html" class="topbar__logo">
+                <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
+                    <rect width="32" height="32" rx="8" fill="url(#lg)" />
+                    <path d="M10 22V12L16 8L22 12V22L16 18L10 22Z" fill="#fff" fill-opacity=".9" />
+                    <path d="M16 18L22 22V12L16 8V18Z" fill="#fff" fill-opacity=".6" />
+                    <defs>
+                        <linearGradient id="lg" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#7C3AED" />
+                            <stop offset="1" stop-color="#2563EB" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>SkillForge</span>
+            </a>
+            <div class="topbar__divider"></div>
+            <h1 class="topbar__course-title" id="courseTitle">The Complete Web Developer Bootcamp 2026</h1>
+        </div>
+        <div class="topbar__right">
+            <div class="topbar__progress">
+                <div class="topbar__progress-bar">
+                    <div class="topbar__progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <span class="topbar__progress-text" id="progressText">0% complete</span>
+            </div>
+            <button class="topbar__btn" id="shareBtn" title="Share">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                </svg>
+            </button>
+            <button class="topbar__btn" id="settingsBtn" title="Settings">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+            </button>
+            <a href="index.html" class="topbar__btn topbar__btn--exit" title="Exit Course">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="learn-layout">
+
+        <!-- Video & Content Area -->
+        <main class="content-area" id="contentArea">
+            <!-- Video Player -->
+            <div class="video-player" id="videoPlayer">
+                <div class="video-player__screen" id="videoScreen">
+                    <div class="video-player__poster" id="videoPoster">
+                        <div class="video-player__poster-bg"></div>
+                        <button class="video-player__play-btn" id="playBtn">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </button>
+                        <div class="video-player__poster-info">
+                            <span class="video-player__lesson-tag" id="lessonTag">Module 1 • Lesson 1</span>
+                            <h2 class="video-player__lesson-title" id="lessonTitle">Welcome & Course Overview</h2>
+                            <span class="video-player__lesson-dur" id="lessonDur">12:34</span>
+                        </div>
+                    </div>
+                    <video id="videoEl" style="display:none; width:100%; height:100%; object-fit:cover;"></video>
+                </div>
+                <div class="video-player__controls" id="videoControls">
+                    <button class="vc-btn" id="prevLessonBtn" title="Previous Lesson">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="19 20 9 12 19 4 19 20" />
+                            <line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </button>
+                    <button class="vc-btn vc-btn--play" id="vcPlayBtn">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="vcPlayIcon">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                    </button>
+                    <button class="vc-btn" id="nextLessonBtn" title="Next Lesson">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5 4 15 12 5 20 5 4" />
+                            <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" />
+                        </svg>
+                    </button>
+                    <div class="vc-progress">
+                        <div class="vc-progress__bar">
+                            <div class="vc-progress__fill" id="vcProgressFill"></div>
+                        </div>
+                        <span class="vc-progress__time" id="vcTime">0:00 / 12:34</span>
+                    </div>
+                    <div class="vc-right">
+                        <button class="vc-btn" id="speedBtn" title="Playback Speed"><span
+                                id="speedText">1x</span></button>
+                        <button class="vc-btn" id="volumeBtn" title="Volume">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                            </svg>
+                        </button>
+                        <button class="vc-btn" id="fullscreenBtn" title="Fullscreen">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="15 3 21 3 21 9" />
+                                <polyline points="9 21 3 21 3 15" />
+                                <line x1="21" y1="3" x2="14" y2="10" />
+                                <line x1="3" y1="21" x2="10" y2="14" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Below Video -->
+            <div class="content-tabs">
+                <button class="content-tab active" data-tab="overview">Overview</button>
+                <button class="content-tab" data-tab="notes">Notes</button>
+                <button class="content-tab" data-tab="resources">Resources</button>
+                <button class="content-tab" data-tab="transcript">Transcript</button>
+                <button class="content-tab" data-tab="qna">Q&A</button>
+                <button class="content-tab" data-tab="announcements">Announcements</button>
+            </div>
+
+            <!-- Tab Panels -->
+            <div class="tab-panels">
+                <!-- Overview -->
+                <div class="tab-panel active" id="panel-overview">
+                    <div class="overview">
+                        <div class="overview__header">
+                            <h2 id="overviewTitle">Welcome & Course Overview</h2>
+                            <div class="overview__meta">
+                                <span class="overview__meta-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                    <span id="overviewDuration">12 min</span>
+                                </span>
+                                <span class="overview__meta-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                    </svg>
+                                    Module <span id="overviewModule">1</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="overview__desc" id="overviewDesc">
+                            <p>In this lesson, you'll get a complete overview of everything covered in this course.
+                                We'll walk through the curriculum, introduce the tools you'll need, and set up your
+                                development environment.</p>
+                        </div>
+                        <div class="overview__instructor">
+                            <div class="overview__instructor-avatar" id="instructorAvatar">AY</div>
+                            <div class="overview__instructor-info">
+                                <h4 id="instructorName">Dr. Angela Yu</h4>
+                                <p id="instructorBio">Lead Instructor • Full-Stack Developer • 2M+ Students</p>
+                            </div>
+                        </div>
+                        <div class="overview__skills">
+                            <h3>Skills You'll Learn</h3>
+                            <div class="skill-tags" id="skillTags"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="tab-panel" id="panel-notes">
+                    <div class="notes">
+                        <div class="notes__header">
+                            <h2>My Notes</h2>
+                            <div class="notes__actions">
+                                <button class="btn btn--sm btn--outline" id="exportNotesBtn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                        <div class="notes__editor">
+                            <div class="notes__toolbar">
+                                <button class="notes__tool" data-cmd="bold" title="Bold"><strong>B</strong></button>
+                                <button class="notes__tool" data-cmd="italic" title="Italic"><em>I</em></button>
+                                <button class="notes__tool" data-cmd="underline" title="Underline"><u>U</u></button>
+                                <div class="notes__tool-divider"></div>
+                                <button class="notes__tool" data-cmd="insertUnorderedList" title="Bullet List">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="8" y1="6" x2="21" y2="6" />
+                                        <line x1="8" y1="12" x2="21" y2="12" />
+                                        <line x1="8" y1="18" x2="21" y2="18" />
+                                        <line x1="3" y1="6" x2="3.01" y2="6" />
+                                        <line x1="3" y1="12" x2="3.01" y2="12" />
+                                        <line x1="3" y1="18" x2="3.01" y2="18" />
+                                    </svg>
+                                </button>
+                                <button class="notes__tool" data-cmd="insertOrderedList" title="Numbered List">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <line x1="10" y1="6" x2="21" y2="6" />
+                                        <line x1="10" y1="12" x2="21" y2="12" />
+                                        <line x1="10" y1="18" x2="21" y2="18" />
+                                        <path d="M4 6h1v4" />
+                                        <path d="M4 10h2" />
+                                        <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
+                                    </svg>
+                                </button>
+                                <div class="notes__tool-divider"></div>
+                                <button class="notes__tool" id="timestampBtn" title="Add Timestamp">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                    <span style="font-size:0.7rem; margin-left:2px;">@time</span>
+                                </button>
+                            </div>
+                            <div class="notes__body" contenteditable="true" id="notesBody"
+                                placeholder="Start taking notes... Your notes are saved automatically per lesson.">
+                            </div>
+                        </div>
+                        <div class="notes__saved-list" id="notesSavedList">
+                            <!-- Saved notes per lesson rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources -->
+                <div class="tab-panel" id="panel-resources">
+                    <div class="resources">
+                        <h2>Course Resources</h2>
+                        <p class="resources__subtitle">Download materials to supplement your learning</p>
+                        <div class="resources__list" id="resourcesList"></div>
+                    </div>
+                </div>
+
+                <!-- Transcript -->
+                <div class="tab-panel" id="panel-transcript">
+                    <div class="transcript">
+                        <div class="transcript__header">
+                            <h2>Transcript</h2>
+                            <div class="transcript__search">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                <input type="text" placeholder="Search transcript..." id="transcriptSearch">
+                            </div>
+                        </div>
+                        <div class="transcript__body" id="transcriptBody"></div>
+                    </div>
+                </div>
+
+                <!-- Q&A -->
+                <div class="tab-panel" id="panel-qna">
+                    <div class="qna">
+                        <div class="qna__header">
+                            <h2>Questions & Answers</h2>
+                            <button class="btn btn--primary btn--sm" id="askQuestionBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                </svg>
+                                Ask a Question
+                            </button>
+                        </div>
+                        <div class="qna__filters">
+                            <button class="qna__filter active" data-filter="all">All Questions</button>
+                            <button class="qna__filter" data-filter="lesson">This Lesson</button>
+                            <button class="qna__filter" data-filter="mine">My Questions</button>
+                        </div>
+                        <div class="qna__list" id="qnaList"></div>
+                        <div class="qna__ask-form" id="qnaForm" style="display:none;">
+                            <h3>Ask a New Question</h3>
+                            <div class="form-group"><label>Title</label><input type="text" id="qnaTitle"
+                                    placeholder="Summarize your question..."></div>
+                            <div class="form-group"><label>Details</label><textarea id="qnaDetails" rows="4"
+                                    placeholder="Provide more context about your question..."></textarea></div>
+                            <div class="qna__form-actions">
+                                <button class="btn btn--outline btn--sm" id="cancelQnaBtn">Cancel</button>
+                                <button class="btn btn--primary btn--sm" id="submitQnaBtn">Post Question</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Announcements -->
+                <div class="tab-panel" id="panel-announcements">
+                    <div class="announcements">
+                        <h2>Announcements</h2>
+                        <div class="announcements__list" id="announcementsList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar / Curriculum -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__header">
+                <h3>Course Content</h3>
+                <button class="sidebar__close" id="sidebarClose">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="sidebar__progress-bar">
+                <div class="sidebar__progress-fill" id="sidebarProgressFill"></div>
+            </div>
+            <div class="sidebar__stats">
+                <span id="completedCount">0</span>/<span id="totalCount">0</span> lessons completed
+            </div>
+            <div class="sidebar__curriculum" id="curriculumList"></div>
+        </aside>
+    </div>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="mobile-sidebar-toggle" id="sidebarToggle">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+    </button>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Certificate Modal -->
+    <div class="modal-overlay" id="certModal">
+        <div class="modal cert-modal" id="certContent"></div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="learn.js"></script>
+</body>
+
+</html>

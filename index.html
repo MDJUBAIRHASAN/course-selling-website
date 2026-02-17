@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillForge — Master New Skills, Transform Your Career</title>
+    <meta name="description"
+        content="SkillForge is a premium online learning platform offering expert-led courses in development, design, data science, business, and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar__inner">
+            <a href="#home" class="navbar__logo">
+                <svg class="navbar__logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="32" height="32" rx="8" fill="url(#logo-gradient)" />
+                    <path d="M10 22V12L16 8L22 12V22L16 18L10 22Z" fill="white" fill-opacity="0.9" />
+                    <path d="M16 18L22 22V12L16 8V18Z" fill="white" fill-opacity="0.6" />
+                    <defs>
+                        <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop stop-color="#7C3AED" />
+                            <stop offset="1" stop-color="#2563EB" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>SkillForge</span>
+            </a>
+            <ul class="navbar__links" id="navLinks">
+                <li><a href="#home" class="navbar__link active" data-page="home">Home</a></li>
+                <li><a href="#catalog" class="navbar__link" data-page="catalog">Courses</a></li>
+                <li><a href="#about" class="navbar__link" data-page="about">About</a></li>
+                <li><a href="#contact" class="navbar__link" data-page="contact">Contact</a></li>
+            </ul>
+            <div class="navbar__actions">
+                <div class="navbar__guest" id="navGuest">
+                    <button class="btn btn--ghost" id="loginBtn">Log In</button>
+                    <button class="btn btn--primary btn--sm" id="signupBtn">Sign Up Free</button>
+                </div>
+                <div class="navbar__user" id="navUser" style="display:none;">
+                    <button class="navbar__user-btn" id="userMenuBtn">
+                        <div class="navbar__user-avatar" id="userAvatarNav">JD</div>
+                        <span class="navbar__user-name" id="userNameNav">John Doe</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+                    <div class="navbar__dropdown" id="userDropdown">
+                        <a href="#profile" data-page="profile" class="navbar__dropdown-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="#my-courses" data-page="my-courses" class="navbar__dropdown-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                            </svg>
+                            My Courses
+                        </a>
+                        <a href="#purchase-history" data-page="purchase-history" class="navbar__dropdown-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            Purchase History
+                        </a>
+                        <div class="navbar__dropdown-divider"></div>
+                        <button class="navbar__dropdown-item navbar__dropdown-logout" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            Log Out
+                        </button>
+                    </div>
+                </div>
+                <button class="navbar__cart" id="cartNavBtn">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                    <span class="navbar__cart-badge" id="cartBadge">0</span>
+                </button>
+                <button class="navbar__hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== MOBILE MENU ========== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-menu__links">
+            <li><a href="#home" data-page="home">Home</a></li>
+            <li><a href="#catalog" data-page="catalog">Courses</a></li>
+            <li><a href="#about" data-page="about">About</a></li>
+            <li><a href="#contact" data-page="contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu__actions">
+            <button class="btn btn--ghost btn--full" id="mobileLoginBtn">Log In</button>
+            <button class="btn btn--primary btn--full" id="mobileSignupBtn">Sign Up Free</button>
+        </div>
+    </div>
+
+    <!-- ========== AUTH MODAL ========== -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <button class="modal__close" id="authModalClose">&times;</button>
+            <div class="modal__tabs">
+                <button class="modal__tab active" data-auth-tab="login">Log In</button>
+                <button class="modal__tab" data-auth-tab="signup">Sign Up</button>
+            </div>
+            <!-- Login Form -->
+            <form class="modal__form" id="loginForm">
+                <h2 class="modal__title">Welcome Back</h2>
+                <p class="modal__subtitle">Log in to continue your learning journey</p>
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <div class="form-row">
+                    <label class="checkbox"><input type="checkbox"> Remember me</label>
+                    <a href="#" class="form-link">Forgot password?</a>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full btn--lg">Log In</button>
+                <div class="modal__divider"><span>or continue with</span></div>
+                <div class="modal__socials">
+                    <button type="button" class="btn btn--outline btn--social">
+                        <svg width="20" height="20" viewBox="0 0 48 48">
+                            <path fill="#FFC107"
+                                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                            <path fill="#FF3D00"
+                                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                            <path fill="#4CAF50"
+                                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                            <path fill="#1976D2"
+                                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                        </svg>
+                        Google
+                    </button>
+                    <button type="button" class="btn btn--outline btn--social">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        GitHub
+                    </button>
+                </div>
+            </form>
+            <!-- Signup Form -->
+            <form class="modal__form" id="signupForm" style="display:none;">
+                <h2 class="modal__title">Create Account</h2>
+                <p class="modal__subtitle">Start learning from world-class instructors</p>
+                <div class="form-row-2col">
+                    <div class="form-group">
+                        <label for="signupFirst">First Name</label>
+                        <input type="text" id="signupFirst" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupLast">Last Name</label>
+                        <input type="text" id="signupLast" placeholder="Doe" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Min 8 characters" required>
+                </div>
+                <label class="checkbox"><input type="checkbox" required> I agree to the <a href="#"
+                        class="form-link">Terms of Service</a> and <a href="#" class="form-link">Privacy
+                        Policy</a></label>
+                <button type="submit" class="btn btn--primary btn--full btn--lg">Create Account</button>
+                <div class="modal__divider"><span>or continue with</span></div>
+                <div class="modal__socials">
+                    <button type="button" class="btn btn--outline btn--social">
+                        <svg width="20" height="20" viewBox="0 0 48 48">
+                            <path fill="#FFC107"
+                                d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                            <path fill="#FF3D00"
+                                d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                            <path fill="#4CAF50"
+                                d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                            <path fill="#1976D2"
+                                d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                        </svg>
+                        Google
+                    </button>
+                    <button type="button" class="btn btn--outline btn--social">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        GitHub
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main id="mainContent">
+
+        <!-- ===== HOME PAGE ===== -->
+        <section id="page-home" class="page active">
+
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero__bg">
+                    <div class="hero__orb hero__orb--1"></div>
+                    <div class="hero__orb hero__orb--2"></div>
+                    <div class="hero__orb hero__orb--3"></div>
+                    <div class="hero__grid-pattern"></div>
+                </div>
+                <div class="container hero__content">
+                    <div class="hero__text">
+                        <div class="hero__badge anim-fade-up">
+                            <span class="pulse-dot"></span>
+                            New: AI & Machine Learning Track Now Live
+                        </div>
+                        <h1 class="hero__title anim-fade-up anim-delay-1">
+                            Unlock Your Potential.<br>
+                            <span class="gradient-text">Learn Without Limits.</span>
+                        </h1>
+                        <p class="hero__subtitle anim-fade-up anim-delay-2">
+                            Join over 50 million learners worldwide. Access 5,000+ courses from top instructors
+                            and industry leaders. Build job-ready skills and earn certificates.
+                        </p>
+                        <div class="hero__cta anim-fade-up anim-delay-3">
+                            <a href="#catalog" class="btn btn--primary btn--lg" data-page="catalog">
+                                Explore Courses
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                            <a href="#about" class="btn btn--outline btn--lg" data-page="about">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polygon points="5 3 19 12 5 21 5 3" />
+                                </svg>
+                                Watch Demo
+                            </a>
+                        </div>
+                        <div class="hero__trust anim-fade-up anim-delay-4">
+                            <div class="hero__avatars">
+                                <div class="hero__avatar"
+                                    style="background: linear-gradient(135deg, #7c3aed, #2563eb);">A</div>
+                                <div class="hero__avatar"
+                                    style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">B</div>
+                                <div class="hero__avatar"
+                                    style="background: linear-gradient(135deg, #f59e0b, #ef4444);">C</div>
+                                <div class="hero__avatar"
+                                    style="background: linear-gradient(135deg, #10b981, #3b82f6);">D</div>
+                            </div>
+                            <div class="hero__trust-text">
+                                <div class="hero__stars">★★★★★</div>
+                                <span>4.9/5 from <strong>25,000+</strong> reviews</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero__visual anim-fade-up anim-delay-2">
+                        <div class="hero__card-stack">
+                            <div class="hero__float-card hero__float-card--1">
+                                <div class="hero__float-icon"
+                                    style="background: linear-gradient(135deg, #7c3aed, #2563eb);">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2">
+                                        <path
+                                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>Web Development</strong>
+                                    <span>2,400+ courses</span>
+                                </div>
+                            </div>
+                            <div class="hero__float-card hero__float-card--2">
+                                <div class="hero__float-icon"
+                                    style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" />
+                                        <polyline points="21 15 16 10 5 21" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>UI/UX Design</strong>
+                                    <span>1,800+ courses</span>
+                                </div>
+                            </div>
+                            <div class="hero__float-card hero__float-card--3">
+                                <div class="hero__float-icon"
+                                    style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2">
+                                        <path d="M12 20V10M18 20V4M6 20v-4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <strong>Data Science</strong>
+                                    <span>1,200+ courses</span>
+                                </div>
+                            </div>
+                            <div class="hero__float-card hero__float-card--progress">
+                                <div class="progress-ring">
+                                    <svg viewBox="0 0 36 36">
+                                        <path class="progress-ring__bg"
+                                            d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0-31.831"
+                                            fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3" />
+                                        <path class="progress-ring__fill"
+                                            d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0-31.831"
+                                            fill="none" stroke="url(#progress-gradient)" stroke-width="3"
+                                            stroke-dasharray="78, 100" />
+                                    </svg>
+                                    <defs>
+                                        <linearGradient id="progress-gradient">
+                                            <stop stop-color="#7C3AED" />
+                                            <stop offset="1" stop-color="#2563EB" />
+                                        </linearGradient>
+                                    </defs>
+                                </div>
+                                <div>
+                                    <strong>78%</strong>
+                                    <span>Completion Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="stats">
+                <div class="container stats__grid">
+                    <div class="stat anim-fade-up">
+                        <div class="stat__number" data-count="50">0</div>
+                        <div class="stat__suffix">M+</div>
+                        <div class="stat__label">Active Learners</div>
+                    </div>
+                    <div class="stat anim-fade-up anim-delay-1">
+                        <div class="stat__number" data-count="5000">0</div>
+                        <div class="stat__suffix">+</div>
+                        <div class="stat__label">Expert Courses</div>
+                    </div>
+                    <div class="stat anim-fade-up anim-delay-2">
+                        <div class="stat__number" data-count="200">0</div>
+                        <div class="stat__suffix">+</div>
+                        <div class="stat__label">Industry Partners</div>
+                    </div>
+                    <div class="stat anim-fade-up anim-delay-3">
+                        <div class="stat__number" data-count="95">0</div>
+                        <div class="stat__suffix">%</div>
+                        <div class="stat__label">Satisfaction Rate</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories -->
+            <section class="categories section">
+                <div class="container">
+                    <div class="section__header anim-fade-up">
+                        <span class="section__tag">Browse Categories</span>
+                        <h2 class="section__title">Explore Our <span class="gradient-text">Top Categories</span></h2>
+                        <p class="section__subtitle">Choose from hundreds of courses in the most in-demand fields</p>
+                    </div>
+                    <div class="categories__grid" id="categoriesGrid">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Courses -->
+            <section class="featured section">
+                <div class="container">
+                    <div class="section__header anim-fade-up">
+                        <span class="section__tag">Popular Right Now</span>
+                        <h2 class="section__title">Featured <span class="gradient-text">Courses</span></h2>
+                        <p class="section__subtitle">Handpicked by our editors based on ratings, reviews, and student
+                            outcomes</p>
+                    </div>
+                    <div class="courses-grid" id="featuredCoursesGrid">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div class="section__cta anim-fade-up">
+                        <a href="#catalog" class="btn btn--outline btn--lg" data-page="catalog">View All Courses →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works -->
+            <section class="how-it-works section">
+                <div class="container">
+                    <div class="section__header anim-fade-up">
+                        <span class="section__tag">How It Works</span>
+                        <h2 class="section__title">Start Learning in <span class="gradient-text">3 Simple Steps</span>
+                        </h2>
+                    </div>
+                    <div class="steps-grid">
+                        <div class="step anim-fade-up">
+                            <div class="step__number">01</div>
+                            <div class="step__icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <circle cx="11" cy="11" r="8" />
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                            </div>
+                            <h3 class="step__title">Find Your Course</h3>
+                            <p class="step__desc">Browse thousands of courses across categories or search for specific
+                                skills you want to learn.</p>
+                        </div>
+                        <div class="step anim-fade-up anim-delay-1">
+                            <div class="step__number">02</div>
+                            <div class="step__icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <polygon points="5 3 19 12 5 21 5 3" />
+                                </svg>
+                            </div>
+                            <h3 class="step__title">Learn at Your Pace</h3>
+                            <p class="step__desc">Watch video lectures, complete assignments, and learn with hands-on
+                                projects on your schedule.</p>
+                        </div>
+                        <div class="step anim-fade-up anim-delay-2">
+                            <div class="step__number">03</div>
+                            <div class="step__icon">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                            </div>
+                            <h3 class="step__title">Get Certified</h3>
+                            <p class="step__desc">Earn certificates recognized by top employers and showcase your skills
+                                to the world.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section class="testimonials section">
+                <div class="container">
+                    <div class="section__header anim-fade-up">
+                        <span class="section__tag">Student Stories</span>
+                        <h2 class="section__title">What Our <span class="gradient-text">Learners Say</span></h2>
+                    </div>
+                    <div class="testimonials__grid" id="testimonialsGrid">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Partners -->
+            <section class="partners section">
+                <div class="container">
+                    <div class="section__header anim-fade-up">
+                        <span class="section__tag">Trusted By</span>
+                        <h2 class="section__title">Learn From <span class="gradient-text">Industry Leaders</span></h2>
+                    </div>
+                    <div class="partners__ticker anim-fade-up">
+                        <div class="partners__track">
+                            <div class="partner-logo">Google</div>
+                            <div class="partner-logo">Microsoft</div>
+                            <div class="partner-logo">Amazon</div>
+                            <div class="partner-logo">Meta</div>
+                            <div class="partner-logo">Apple</div>
+                            <div class="partner-logo">Netflix</div>
+                            <div class="partner-logo">Tesla</div>
+                            <div class="partner-logo">IBM</div>
+                            <div class="partner-logo">Google</div>
+                            <div class="partner-logo">Microsoft</div>
+                            <div class="partner-logo">Amazon</div>
+                            <div class="partner-logo">Meta</div>
+                            <div class="partner-logo">Apple</div>
+                            <div class="partner-logo">Netflix</div>
+                            <div class="partner-logo">Tesla</div>
+                            <div class="partner-logo">IBM</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta-section section">
+                <div class="container">
+                    <div class="cta-card anim-fade-up">
+                        <div class="cta-card__bg">
+                            <div class="cta-card__orb cta-card__orb--1"></div>
+                            <div class="cta-card__orb cta-card__orb--2"></div>
+                        </div>
+                        <h2 class="cta-card__title">Ready to Start Your Learning Journey?</h2>
+                        <p class="cta-card__desc">Join millions of learners and start building the skills you need to
+                            succeed. First course is free!</p>
+                        <div class="cta-card__actions">
+                            <button class="btn btn--white btn--lg" id="ctaSignupBtn">Get Started Free</button>
+                            <a href="#catalog" class="btn btn--ghost-white btn--lg" data-page="catalog">Browse
+                                Courses</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <!-- ===== CATALOG PAGE ===== -->
+        <section id="page-catalog" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <div class="breadcrumb"><a href="#home" data-page="home">Home</a> / <span>Courses</span></div>
+                    <h1 class="page-header__title">Explore All <span class="gradient-text">Courses</span></h1>
+                    <p class="page-header__desc">Discover the perfect course to advance your career and skills</p>
+                    <div class="search-bar" id="catalogSearch">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Search courses, topics, or instructors...">
+                    </div>
+                </div>
+            </div>
+            <div class="container catalog-layout">
+                <aside class="catalog-sidebar" id="catalogSidebar">
+                    <div class="filter-section">
+                        <h3 class="filter-section__title">
+                            Category
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </h3>
+                        <div class="filter-section__body" id="filterCategories">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h3 class="filter-section__title">
+                            Level
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </h3>
+                        <div class="filter-section__body" id="filterLevels">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h3 class="filter-section__title">
+                            Price Range
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </h3>
+                        <div class="filter-section__body" id="filterPrice">
+                            <label class="checkbox"><input type="radio" name="price" value="all" checked> All
+                                Prices</label>
+                            <label class="checkbox"><input type="radio" name="price" value="free"> Free</label>
+                            <label class="checkbox"><input type="radio" name="price" value="0-50"> Under $50</label>
+                            <label class="checkbox"><input type="radio" name="price" value="50-100"> $50 - $100</label>
+                            <label class="checkbox"><input type="radio" name="price" value="100+"> $100+</label>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h3 class="filter-section__title">
+                            Rating
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </h3>
+                        <div class="filter-section__body" id="filterRating">
+                            <label class="checkbox"><input type="radio" name="rating" value="all" checked> All
+                                Ratings</label>
+                            <label class="checkbox"><input type="radio" name="rating" value="4.5"> 4.5 & above ★</label>
+                            <label class="checkbox"><input type="radio" name="rating" value="4"> 4.0 & above ★</label>
+                            <label class="checkbox"><input type="radio" name="rating" value="3.5"> 3.5 & above ★</label>
+                        </div>
+                    </div>
+                    <button class="btn btn--primary btn--full" id="clearFiltersBtn">Clear All Filters</button>
+                </aside>
+                <div class="catalog-main">
+                    <div class="catalog-toolbar">
+                        <span class="catalog-toolbar__count" id="courseCount">0 courses found</span>
+                        <div class="catalog-toolbar__sort">
+                            <label>Sort by:</label>
+                            <select id="sortSelect">
+                                <option value="popular">Most Popular</option>
+                                <option value="rating">Highest Rated</option>
+                                <option value="newest">Newest</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                            </select>
+                        </div>
+                        <button class="btn btn--ghost btn--sm filter-toggle" id="filterToggle">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="4" y1="21" x2="4" y2="14" />
+                                <line x1="4" y1="10" x2="4" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12" y2="3" />
+                                <line x1="20" y1="21" x2="20" y2="16" />
+                                <line x1="20" y1="12" x2="20" y2="3" />
+                            </svg>
+                            Filters
+                        </button>
+                    </div>
+                    <div class="courses-grid" id="catalogCoursesGrid">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== COURSE DETAIL PAGE ===== -->
+        <section id="page-course-detail" class="page">
+            <div id="courseDetailContent">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===== CART PAGE ===== -->
+        <section id="page-cart" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <div class="breadcrumb"><a href="#home" data-page="home">Home</a> / <span>Shopping Cart</span></div>
+                    <h1 class="page-header__title">Your <span class="gradient-text">Shopping Cart</span></h1>
+                </div>
+            </div>
+            <div class="container cart-layout">
+                <div class="cart-items" id="cartItems">
+                    <!-- Rendered by JS -->
+                </div>
+                <aside class="cart-summary" id="cartSummary">
+                    <!-- Rendered by JS -->
+                </aside>
+            </div>
+        </section>
+
+        <!-- ===== CHECKOUT PAGE ===== -->
+        <section id="page-checkout" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <div class="breadcrumb"><a href="#home" data-page="home">Home</a> / <a href="#cart"
+                            data-page="cart">Cart</a> / <span>Checkout</span></div>
+                    <h1 class="page-header__title">Secure <span class="gradient-text">Checkout</span></h1>
+                </div>
+            </div>
+            <div class="container checkout-layout" id="checkoutContent">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===== ABOUT PAGE ===== -->
+        <section id="page-about" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <h1 class="page-header__title">About <span class="gradient-text">SkillForge</span></h1>
+                    <p class="page-header__desc">We're on a mission to make quality education accessible to everyone,
+                        everywhere.</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-card anim-fade-up">
+                        <div class="about-card__icon" style="background: linear-gradient(135deg, #7c3aed, #2563eb);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="1.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>To democratize education by providing world-class learning experiences accessible to anyone,
+                            regardless of their background or location.</p>
+                    </div>
+                    <div class="about-card anim-fade-up anim-delay-1">
+                        <div class="about-card__icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="1.5">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                            </svg>
+                        </div>
+                        <h3>Our Approach</h3>
+                        <p>We partner with leading universities and companies to offer courses that combine theoretical
+                            knowledge with practical, real-world applications.</p>
+                    </div>
+                    <div class="about-card anim-fade-up anim-delay-2">
+                        <div class="about-card__icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="1.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                                <path d="M2 17l10 5 10-5" />
+                                <path d="M2 12l10 5 10-5" />
+                            </svg>
+                        </div>
+                        <h3>Our Impact</h3>
+                        <p>Over 50 million learners have advanced their careers through our platform, with 85% reporting
+                            improved job prospects within 6 months.</p>
+                    </div>
+                </div>
+                <section class="team section">
+                    <div class="section__header anim-fade-up">
+                        <span class="section__tag">Our Team</span>
+                        <h2 class="section__title">Meet the <span class="gradient-text">Founders</span></h2>
+                    </div>
+                    <div class="team-grid">
+                        <div class="team-member anim-fade-up">
+                            <div class="team-member__avatar"
+                                style="background: linear-gradient(135deg, #7c3aed, #2563eb);">SK</div>
+                            <h4>Sarah Kim</h4>
+                            <span>CEO & Co-founder</span>
+                            <p>Former VP of Engineering at Google with 15+ years in edtech.</p>
+                        </div>
+                        <div class="team-member anim-fade-up anim-delay-1">
+                            <div class="team-member__avatar"
+                                style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">MR</div>
+                            <h4>Marcus Rodriguez</h4>
+                            <span>CTO & Co-founder</span>
+                            <p>AI researcher and former Stanford professor of Computer Science.</p>
+                        </div>
+                        <div class="team-member anim-fade-up anim-delay-2">
+                            <div class="team-member__avatar"
+                                style="background: linear-gradient(135deg, #10b981, #3b82f6);">EP</div>
+                            <h4>Emma Patel</h4>
+                            <span>Chief Learning Officer</span>
+                            <p>Curriculum design expert with experience at Khan Academy and edX.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT PAGE ===== -->
+        <section id="page-contact" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <h1 class="page-header__title">Get in <span class="gradient-text">Touch</span></h1>
+                    <p class="page-header__desc">Have a question or feedback? We'd love to hear from you.</p>
+                </div>
+            </div>
+            <div class="container contact-layout">
+                <div class="contact-info">
+                    <div class="contact-info__card anim-fade-up">
+                        <div class="contact-info__icon" style="background: linear-gradient(135deg, #7c3aed, #2563eb);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="1.5">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                        </div>
+                        <h4>Email Us</h4>
+                        <p>support@skillforge.com</p>
+                    </div>
+                    <div class="contact-info__card anim-fade-up anim-delay-1">
+                        <div class="contact-info__icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="1.5">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                        </div>
+                        <h4>Visit Us</h4>
+                        <p>123 Learning Lane, San Francisco, CA 94105</p>
+                    </div>
+                    <div class="contact-info__card anim-fade-up anim-delay-2">
+                        <div class="contact-info__icon" style="background: linear-gradient(135deg, #10b981, #3b82f6);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="1.5">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                        </div>
+                        <h4>Call Us</h4>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                </div>
+                <form class="contact-form anim-fade-up" id="contactForm">
+                    <div class="form-row-2col">
+                        <div class="form-group">
+                            <label for="contactName">Your Name</label>
+                            <input type="text" id="contactName" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactSubject">Subject</label>
+                        <input type="text" id="contactSubject" placeholder="How can we help?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" rows="5" placeholder="Tell us more about your inquiry..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--lg">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===== MY PROFILE PAGE ===== -->
+        <section id="page-profile" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <h1 class="page-header__title">My <span class="gradient-text">Profile</span></h1>
+                </div>
+            </div>
+            <div class="container profile-layout" id="profileContent">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===== MY COURSES PAGE ===== -->
+        <section id="page-my-courses" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <h1 class="page-header__title">My <span class="gradient-text">Courses</span></h1>
+                    <p class="page-header__desc">Continue learning where you left off</p>
+                </div>
+            </div>
+            <div class="container" id="myCoursesContent">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===== PURCHASE HISTORY PAGE ===== -->
+        <section id="page-purchase-history" class="page">
+            <div class="page-header">
+                <div class="container">
+                    <h1 class="page-header__title">Purchase <span class="gradient-text">History</span></h1>
+                </div>
+            </div>
+            <div class="container" id="purchaseHistoryContent">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <a href="#home" class="navbar__logo" data-page="home">
+                        <svg class="navbar__logo-icon" viewBox="0 0 32 32" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="8" fill="url(#logo-gradient-2)" />
+                            <path d="M10 22V12L16 8L22 12V22L16 18L10 22Z" fill="white" fill-opacity="0.9" />
+                            <path d="M16 18L22 22V12L16 8V18Z" fill="white" fill-opacity="0.6" />
+                            <defs>
+                                <linearGradient id="logo-gradient-2" x1="0" y1="0" x2="32" y2="32">
+                                    <stop stop-color="#7C3AED" />
+                                    <stop offset="1" stop-color="#2563EB" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span>SkillForge</span>
+                    </a>
+                    <p>Empowering learners worldwide with premium online education from industry experts.</p>
+                    <div class="footer__socials">
+                        <a href="#" aria-label="Twitter" class="footer__social">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" class="footer__social">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="footer__social">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="footer__social">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#catalog" data-page="catalog">Browse Courses</a></li>
+                        <li><a href="#">Enterprise Plans</a></li>
+                        <li><a href="#">Become an Instructor</a></li>
+                        <li><a href="#">Affiliate Program</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about" data-page="about">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#contact" data-page="contact">Contact</a></li>
+                        <li><a href="admin.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2026 SkillForge. All rights reserved.</p>
+                <div class="footer__legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== TOAST ========== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
