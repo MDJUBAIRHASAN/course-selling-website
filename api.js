@@ -44,7 +44,7 @@ const api = {
 
     // Orders
     getOrders: (query = '') => apiFetch(`/orders${query ? '?' + query : ''}`),
-    purchase: (courseId) => apiFetch('/orders', { method: 'POST', body: JSON.stringify({ courseId }) }),
+    purchase: (courseId, payment, paymentPhone) => apiFetch('/orders', { method: 'POST', body: JSON.stringify({ courseId, payment, paymentPhone }) }),
     updateOrderStatus: (id, status) => apiFetch(`/orders/${id}`, { method: 'PUT', body: JSON.stringify({ status }) }),
     getMyOrders: () => apiFetch('/orders/my/purchases'),
 

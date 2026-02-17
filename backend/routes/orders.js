@@ -49,7 +49,7 @@ router.get('/:id', auth, async (req, res) => {
 // Create order (purchase a course)
 router.post('/', auth, async (req, res) => {
     try {
-        const { courseId, payment } = req.body;
+        const { courseId, payment, paymentPhone } = req.body;
         const user = req.user;
 
         // Get course details
@@ -61,6 +61,10 @@ router.post('/', auth, async (req, res) => {
             return res.status(400).json({ error: 'You have already purchased this course' });
         }
 
+        // Generate transaction ID
+        const txnPrefix = (payment === 'Nagad') ? 'NGD' : 'BKS';
+        const transactionId = `${txnPrefix}${Date.now().toString(36).toUpperCase()}${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
         // Create the order
         const order = await Order.create({
             customer: user.name,
@@ -69,7 +73,9 @@ router.post('/', auth, async (req, res) => {
             course: course.title,
             courseId: course._id,
             amount: course.price,
-            payment: payment || 'Stripe',
+            payment: payment || 'bKash',
+            paymentPhone: paymentPhone || '',
+            transactionId,
             status: 'completed',
             avatar: user.avatar
         });

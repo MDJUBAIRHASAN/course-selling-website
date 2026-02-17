@@ -32,8 +32,16 @@ const orderSchema = new mongoose.Schema({
     },
     payment: {
         type: String,
-        enum: ['Stripe', 'PayPal', 'Razorpay'],
-        default: 'Stripe'
+        enum: ['bKash', 'Nagad'],
+        default: 'bKash'
+    },
+    paymentPhone: {
+        type: String,
+        default: ''
+    },
+    transactionId: {
+        type: String,
+        default: ''
     },
     status: {
         type: String,
