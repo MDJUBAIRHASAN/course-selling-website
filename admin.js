@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSearch();
   } catch (err) {
     console.error('Auth failed:', err);
+    alert('Admin Crash: ' + err.message);
     localStorage.removeItem('sf_admin_token');
     showAdminLogin();
   }
