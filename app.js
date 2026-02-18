@@ -599,7 +599,6 @@ function renderCart() {
 
 // ===== CHECKOUT =====
 let selectedPayment = 'bKash';
-let paymentPhone = '';
 
 function renderCheckout() {
   if (cart.length === 0) { window.location.hash = 'cart'; return; }
@@ -609,204 +608,158 @@ function renderCheckout() {
     showAuthTab('login');
     return;
   }
-  const subtotal = getCartTotal(); const tax = subtotal * 0.05; const total = subtotal + tax;
+  const subtotal = getCartTotal(); const total = subtotal;
   const container = document.getElementById('checkoutContent');
   container.innerHTML = `
-    <div>
-      <div class="checkout-steps">
-        <div class="checkout-step active" id="step1">1. Billing</div>
-        <div class="checkout-step" id="step2">2. Payment</div>
-        <div class="checkout-step" id="step3">3. OTP</div>
-        <div class="checkout-step" id="step4">4. Done</div>
+    <!-- BILLING DETAILS (left) -->
+    <div class="checkout-billing">
+      <h2 class="checkout-section-title">Billing Details</h2>
+      <div class="form-group"><label>Full Name <span class="required">*</span></label><input type="text" id="billingName" value="${currentUser.name || ''}" placeholder="Full Name" required></div>
+      <div class="form-group"><label>Email Address <span class="required">*</span></label><input type="email" id="billingEmail" value="${currentUser.email || ''}" placeholder="Email Address" required></div>
+      <div class="form-group"><label>Mobile Number <span class="required">*</span></label><input type="tel" id="billingPhone" placeholder="01XXXXXXXXX" required></div>
+      <div class="form-group"><label>Address <span class="required">*</span></label><input type="text" id="billingAddress" placeholder="Your address" value="Dhaka"></div>
+      <div class="form-row-3col">
+        <div class="form-group"><label>District <span class="required">*</span></label><select id="billingDistrict"><option>Dhaka</option><option>Chittagong</option><option>Sylhet</option><option>Rajshahi</option><option>Khulna</option><option>Barisal</option><option>Rangpur</option><option>Mymensingh</option></select></div>
+        <div class="form-group"><label>Town / City</label><input type="text" id="billingCity" placeholder="Town / City"></div>
+        <div class="form-group"><label>Postcode / ZIP</label><input type="text" id="billingZip" placeholder="ZIP"></div>
       </div>
-      <div class="checkout-form" id="checkoutFormArea">
-        <!-- STEP 1: BILLING -->
-        <div id="billingStep">
-          <h3>Billing Information</h3>
-          <div class="form-row-2col"><div class="form-group"><label>Full Name</label><input type="text" id="billingName" value="${currentUser.name || ''}" placeholder="Your full name" required></div><div class="form-group"><label>Email</label><input type="email" id="billingEmail" value="${currentUser.email || ''}" placeholder="you@example.com" required></div></div>
-          <div class="form-group"><label>Phone Number</label><input type="tel" id="billingPhone" placeholder="01XXXXXXXXX" pattern="01[3-9][0-9]{8}" required></div>
-          <div class="form-group"><label>Country</label><select id="billingCountry"><option selected>Bangladesh</option><option>India</option><option>Pakistan</option><option>United States</option><option>United Kingdom</option></select></div>
-          <button class="btn btn--primary btn--lg" onclick="goToPaymentStep()">Continue to Payment</button>
-        </div>
+      <div class="form-group"><label>Order Note</label><textarea id="orderNote" placeholder="Notes about your order, e.g. special note for your courses" rows="3"></textarea></div>
+    </div>
 
-        <!-- STEP 2: PAYMENT METHOD -->
-        <div id="paymentStep" style="display:none;">
-          <h3>Choose Payment Method</h3>
-          <div class="payment-methods">
-            <label class="payment-card payment-card--bkash selected" data-method="bKash">
-              <input type="radio" name="paymentMethod" value="bKash" checked>
-              <div class="payment-card__logo">
-                <div class="payment-card__icon payment-card__icon--bkash">b</div>
-                <div>
-                  <div class="payment-card__name">bKash</div>
-                  <div class="payment-card__desc">Mobile Banking</div>
-                </div>
-              </div>
-              <div class="payment-card__check">✓</div>
-            </label>
-            <label class="payment-card payment-card--nagad" data-method="Nagad">
-              <input type="radio" name="paymentMethod" value="Nagad">
-              <div class="payment-card__logo">
-                <div class="payment-card__icon payment-card__icon--nagad">N</div>
-                <div>
-                  <div class="payment-card__name">Nagad</div>
-                  <div class="payment-card__desc">Digital Payment</div>
-                </div>
-              </div>
-              <div class="payment-card__check">✓</div>
-            </label>
-          </div>
-          <div class="form-group" style="margin-top:20px;">
-            <label>Payment Phone Number</label>
-            <input type="tel" id="payPhone" placeholder="01XXXXXXXXX" pattern="01[3-9][0-9]{8}" required>
-          </div>
-          <div class="form-group">
-            <label>PIN</label>
-            <input type="password" id="payPin" placeholder="Enter your 4-digit PIN" maxlength="4" pattern="[0-9]{4}" required>
-          </div>
-          <div style="display:flex; gap:12px;">
-            <button class="btn btn--outline" onclick="goToBillingStep()">Back</button>
-            <button class="btn btn--primary btn--lg" id="payNowBtn" onclick="goToOtpStep()">Pay ৳${total.toFixed(2)}</button>
-          </div>
-        </div>
+    <!-- YOUR ORDER + PAYMENT (right) -->
+    <aside class="checkout-order-side">
+      <div class="order-summary-box">
+        <h2 class="checkout-section-title">Your Order</h2>
+        <div class="order-summary-header"><span>Product</span><span>Subtotal</span></div>
+        ${cart.map(item => { const c = COURSES.find(x => String(x.id) === String(item.id)); return c ? `<div class="order-summary-item"><span class="order-item-name">${c.title}<br><small>× 1</small></span><span class="order-item-price">৳${c.price.toFixed(2)}</span></div>` : ''; }).join('')}
+        <div class="order-summary-row"><span>Subtotal</span><span class="order-subtotal">৳${subtotal.toFixed(2)}</span></div>
+        <div class="order-summary-total"><span>Total</span><span class="order-total-price">৳${total.toFixed(2)}</span></div>
+      </div>
 
-        <!-- STEP 3: OTP VERIFICATION -->
-        <div id="otpStep" style="display:none;">
-          <div style="text-align:center; padding:10px 0 20px;">
-            <div class="otp-icon" id="otpMethodIcon">b</div>
-            <h3 style="margin-bottom:4px;">Verify Payment</h3>
-            <p style="color:var(--text-secondary); font-size:.95rem;">An OTP has been sent to <strong id="otpPhoneDisplay">01X...XXX</strong></p>
-          </div>
-          <div class="form-group">
-            <label>Enter 4-digit OTP</label>
-            <div class="otp-inputs" id="otpInputs">
-              <input type="text" maxlength="1" class="otp-input" data-otp="0" inputmode="numeric">
-              <input type="text" maxlength="1" class="otp-input" data-otp="1" inputmode="numeric">
-              <input type="text" maxlength="1" class="otp-input" data-otp="2" inputmode="numeric">
-              <input type="text" maxlength="1" class="otp-input" data-otp="3" inputmode="numeric">
+      <!-- PAYMENT METHOD -->
+      <div class="payment-section">
+        <div class="payment-options">
+          <label class="payment-option">
+            <input type="radio" name="payMethod" value="bKash" checked>
+            <span class="payment-option__radio"></span>
+            <span class="payment-option__label">bKash</span>
+            <span class="payment-option__icons"><span class="pay-icon pay-icon--bkash">b</span></span>
+          </label>
+          <div class="payment-detail payment-detail--bkash" id="bkashDetail">
+            <div class="payment-instructions">
+              <p class="payment-instructions__title">Send payment via bKash:</p>
+              <ol>
+                <li>Go to your <strong>bKash app</strong> or Dial <strong>*247#</strong></li>
+                <li>Choose <strong>"Send Money"</strong></li>
+                <li>Enter below bKash Account Number</li>
+                <li>Enter total amount</li>
+                <li>Now enter your bKash Account PIN to confirm the transaction</li>
+                <li>Copy <strong>Transaction ID</strong> from payment confirmation message and paste below</li>
+              </ol>
+              <div class="payment-amount-display">You need to send us <strong>৳${total.toFixed(2)}</strong></div>
+              <div class="payment-account-info">
+                <div class="payment-account-row"><span>Account Type:</span> <strong>Personal</strong></div>
+                <div class="payment-account-row"><span>Account Number:</span> <strong class="payment-account-number">01XXXXXXXXX</strong></div>
+              </div>
+              <div class="form-group"><label class="payment-input-label">Your bKash Account Number</label><input type="tel" id="bkashPhone" placeholder="01XXXXXXXXX" class="payment-input"></div>
+              <div class="form-group"><label class="payment-input-label">Your bKash Transaction ID</label><input type="text" id="bkashTxnId" placeholder="e.g. BKS8A7F3K2" class="payment-input"></div>
             </div>
           </div>
-          <button class="btn btn--primary btn--lg btn--full" id="verifyOtpBtn" onclick="completeOrder()">Verify & Complete Payment</button>
-          <div style="text-align:center; margin-top:16px;">
-            <span style="color:var(--text-secondary); font-size:.9rem;" id="otpTimer">Resend OTP in 30s</span>
+
+          <label class="payment-option">
+            <input type="radio" name="payMethod" value="Nagad">
+            <span class="payment-option__radio"></span>
+            <span class="payment-option__label">Nagad</span>
+            <span class="payment-option__icons"><span class="pay-icon pay-icon--nagad">N</span></span>
+          </label>
+          <div class="payment-detail payment-detail--nagad" id="nagadDetail" style="display:none;">
+            <div class="payment-instructions">
+              <p class="payment-instructions__title">Send payment via Nagad:</p>
+              <ol>
+                <li>Go to your <strong>Nagad app</strong> or Dial <strong>*167#</strong></li>
+                <li>Choose <strong>"Send Money"</strong></li>
+                <li>Enter below Nagad Account Number</li>
+                <li>Enter total amount</li>
+                <li>Enter your Nagad Account PIN to confirm</li>
+                <li>Copy <strong>Transaction ID</strong> from confirmation message and paste below</li>
+              </ol>
+              <div class="payment-amount-display">You need to send us <strong>৳${total.toFixed(2)}</strong></div>
+              <div class="payment-account-info">
+                <div class="payment-account-row"><span>Account Type:</span> <strong>Personal</strong></div>
+                <div class="payment-account-row"><span>Account Number:</span> <strong class="payment-account-number">01XXXXXXXXX</strong></div>
+              </div>
+              <div class="form-group"><label class="payment-input-label">Your Nagad Account Number</label><input type="tel" id="nagadPhone" placeholder="01XXXXXXXXX" class="payment-input"></div>
+              <div class="form-group"><label class="payment-input-label">Your Nagad Transaction ID</label><input type="text" id="nagadTxnId" placeholder="e.g. NGD9B8C4D1" class="payment-input"></div>
+            </div>
           </div>
         </div>
 
-        <!-- STEP 4: CONFIRMATION -->
-        <div id="confirmationStep" style="display:none; text-align:center; padding:30px 20px;">
+        <label class="terms-checkbox">
+          <input type="checkbox" id="termsCheck">
+          <span>I have read & agreed: <a href="#" class="terms-link">Terms & Conditions</a> <span class="required">*</span></span>
+        </label>
+
+        <button class="btn btn--primary btn--lg btn--full place-order-btn" id="placeOrderBtn" onclick="completeOrder()">PLACE ORDER</button>
+      </div>
+
+      <!-- CONFIRMATION (hidden, shown after order) -->
+      <div id="confirmationStep" style="display:none;">
+        <div style="text-align:center; padding:30px 20px;">
           <div style="font-size:3.5rem; margin-bottom:16px;">🎉</div>
-          <h2 style="font-family:var(--font-display); margin-bottom:8px;">Payment Successful!</h2>
-          <p style="color:var(--text-secondary); margin-bottom:24px;">Your courses are now unlocked. Happy learning!</p>
+          <h2 style="font-family:var(--font-display); margin-bottom:8px;">Order Placed Successfully!</h2>
+          <p style="color:var(--text-secondary); margin-bottom:24px;">Your payment is being verified. You'll get access shortly.</p>
           <div class="receipt-box" id="receiptBox"></div>
-          <a href="#my-courses" class="btn btn--primary btn--lg" style="margin-top:20px;">Start Learning →</a>
+          <a href="#my-courses" class="btn btn--primary btn--lg" style="margin-top:20px;">Go to My Courses →</a>
         </div>
       </div>
-    </div>
-    <aside class="cart-summary">
-      <h3 class="cart-summary__title">Order Summary</h3>
-      ${cart.map(item => { const c = COURSES.find(x => String(x.id) === String(item.id)); return c ? `<div class="cart-summary__row"><span style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.title}</span><span>৳${c.price.toFixed(2)}</span></div>` : ''; }).join('')}
-      <div class="cart-summary__row"><span>Tax (5%)</span><span>৳${tax.toFixed(2)}</span></div>
-      <div class="cart-summary__total"><span>Total</span><span>৳${total.toFixed(2)}</span></div>
     </aside>`;
 
-  // Payment method selection
-  document.querySelectorAll('.payment-card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      card.querySelector('input[type=radio]').checked = true;
-      selectedPayment = card.dataset.method;
+  // Toggle payment details on radio change
+  document.querySelectorAll('input[name="payMethod"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      selectedPayment = radio.value;
+      document.getElementById('bkashDetail').style.display = radio.value === 'bKash' ? 'block' : 'none';
+      document.getElementById('nagadDetail').style.display = radio.value === 'Nagad' ? 'block' : 'none';
     });
   });
-
-  // OTP input auto-focus
-  setTimeout(() => {
-    document.querySelectorAll('.otp-input').forEach((inp, i, all) => {
-      inp.addEventListener('input', () => {
-        if (inp.value && i < all.length - 1) all[i + 1].focus();
-      });
-      inp.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !inp.value && i > 0) all[i - 1].focus();
-      });
-    });
-  }, 100);
-}
-
-function goToPaymentStep() {
-  const phone = document.getElementById('billingPhone').value.trim();
-  if (!phone || !/^01[3-9][0-9]{8}$/.test(phone)) {
-    showToast('Please enter a valid Bangladeshi phone number (01XXXXXXXXX)', 'error');
-    return;
-  }
-  document.getElementById('billingStep').style.display = 'none';
-  document.getElementById('paymentStep').style.display = 'block';
-  document.getElementById('step1').classList.remove('active'); document.getElementById('step1').classList.add('completed');
-  document.getElementById('step2').classList.add('active');
-  document.getElementById('payPhone').value = phone;
-}
-
-function goToBillingStep() {
-  document.getElementById('paymentStep').style.display = 'none';
-  document.getElementById('billingStep').style.display = 'block';
-  document.getElementById('step1').classList.add('active'); document.getElementById('step1').classList.remove('completed');
-  document.getElementById('step2').classList.remove('active');
-}
-
-function goToOtpStep() {
-  const phone = document.getElementById('payPhone').value.trim();
-  const pin = document.getElementById('payPin').value.trim();
-  if (!phone || !/^01[3-9][0-9]{8}$/.test(phone)) {
-    showToast('Please enter a valid phone number', 'error'); return;
-  }
-  if (!pin || pin.length !== 4) {
-    showToast('Please enter your 4-digit PIN', 'error'); return;
-  }
-  paymentPhone = phone;
-
-  document.getElementById('paymentStep').style.display = 'none';
-  document.getElementById('otpStep').style.display = 'block';
-  document.getElementById('step2').classList.remove('active'); document.getElementById('step2').classList.add('completed');
-  document.getElementById('step3').classList.add('active');
-
-  // Show masked phone
-  document.getElementById('otpPhoneDisplay').textContent = phone.slice(0, 3) + '****' + phone.slice(-3);
-
-  // Update icon color
-  const otpIcon = document.getElementById('otpMethodIcon');
-  if (selectedPayment === 'Nagad') {
-    otpIcon.textContent = 'N';
-    otpIcon.style.background = 'linear-gradient(135deg, #F6921E, #ED1C24)';
-  } else {
-    otpIcon.textContent = 'b';
-    otpIcon.style.background = 'linear-gradient(135deg, #E2136E, #C7115A)';
-  }
-
-  // OTP timer
-  let sec = 30;
-  const timerEl = document.getElementById('otpTimer');
-  const interval = setInterval(() => {
-    sec--;
-    timerEl.textContent = sec > 0 ? `Resend OTP in ${sec}s` : '';
-    if (sec <= 0) {
-      clearInterval(interval);
-      timerEl.innerHTML = '<button class="btn btn--ghost btn--sm" onclick="showToast(\'OTP resent!\',\'success\')">Resend OTP</button>';
-    }
-  }, 1000);
-
-  // Auto-focus first OTP input
-  setTimeout(() => document.querySelector('.otp-input')?.focus(), 200);
 }
 
 async function completeOrder() {
-  // Validate OTP (accept any 4 digits for simulation)
-  const otpDigits = Array.from(document.querySelectorAll('.otp-input')).map(i => i.value).join('');
-  if (otpDigits.length !== 4) {
-    showToast('Please enter the 4-digit OTP', 'error');
-    return;
+  // Validate billing
+  const name = document.getElementById('billingName').value.trim();
+  const email = document.getElementById('billingEmail').value.trim();
+  const phone = document.getElementById('billingPhone').value.trim();
+  if (!name || !email || !phone) {
+    showToast('Please fill in all billing details', 'error'); return;
+  }
+  if (!/^01[3-9][0-9]{8}$/.test(phone)) {
+    showToast('Please enter a valid phone number (01XXXXXXXXX)', 'error'); return;
   }
 
-  // Show loading state
-  const btn = document.getElementById('verifyOtpBtn');
+  // Validate payment
+  let payPhone, txnId;
+  if (selectedPayment === 'bKash') {
+    payPhone = document.getElementById('bkashPhone').value.trim();
+    txnId = document.getElementById('bkashTxnId').value.trim();
+  } else {
+    payPhone = document.getElementById('nagadPhone').value.trim();
+    txnId = document.getElementById('nagadTxnId').value.trim();
+  }
+
+  if (!payPhone || !/^01[3-9][0-9]{8}$/.test(payPhone)) {
+    showToast(`Please enter your ${selectedPayment} account number`, 'error'); return;
+  }
+  if (!txnId || txnId.length < 4) {
+    showToast(`Please enter a valid ${selectedPayment} Transaction ID`, 'error'); return;
+  }
+
+  // Validate terms
+  if (!document.getElementById('termsCheck').checked) {
+    showToast('Please agree to the Terms & Conditions', 'error'); return;
+  }
+
+  // Show loading
+  const btn = document.getElementById('placeOrderBtn');
   btn.disabled = true;
   btn.textContent = 'Processing...';
 
@@ -815,15 +768,15 @@ async function completeOrder() {
   // Purchase each course via API
   for (const item of cart) {
     try {
-      lastOrder = await api.purchase(item.id, selectedPayment, paymentPhone);
+      lastOrder = await api.purchase(item.id, selectedPayment, payPhone, txnId);
       if (!purchasedCourses.includes(String(item.id))) {
         purchasedCourses.push(String(item.id));
       }
     } catch (err) {
       console.warn('Purchase error for course', item.id, err.message);
-      showToast(err.message || 'Payment failed', 'error');
+      showToast(err.message || 'Order failed', 'error');
       btn.disabled = false;
-      btn.textContent = 'Verify & Complete Payment';
+      btn.textContent = 'PLACE ORDER';
       return;
     }
   }
@@ -843,26 +796,25 @@ async function completeOrder() {
     }));
   } catch { }
 
-  // Show confirmation
-  document.getElementById('otpStep').style.display = 'none';
+  // Hide checkout form, show confirmation
+  document.querySelector('.checkout-billing').style.display = 'none';
+  document.querySelector('.order-summary-box').style.display = 'none';
+  document.querySelector('.payment-section').style.display = 'none';
   document.getElementById('confirmationStep').style.display = 'block';
-  document.getElementById('step3').classList.remove('active'); document.getElementById('step3').classList.add('completed');
-  document.getElementById('step4').classList.add('active');
 
   // Show receipt
-  const total = getCartTotal() * 1.05;
-  const txnId = lastOrder?.transactionId || 'N/A';
+  const total = getCartTotal();
   const methodColor = selectedPayment === 'bKash' ? '#E2136E' : '#F6921E';
   document.getElementById('receiptBox').innerHTML = `
     <div class="receipt-row"><span>Payment Method</span><span style="color:${methodColor};font-weight:600;">${selectedPayment}</span></div>
-    <div class="receipt-row"><span>Phone</span><span>${paymentPhone}</span></div>
+    <div class="receipt-row"><span>Account Number</span><span>${payPhone}</span></div>
     <div class="receipt-row"><span>Transaction ID</span><span style="font-family:monospace;font-size:.85rem;">${txnId}</span></div>
-    <div class="receipt-row"><span>Amount Paid</span><span style="font-weight:700;">৳${total.toFixed(2)}</span></div>
-    <div class="receipt-row"><span>Status</span><span class="badge badge--success">Completed</span></div>
+    <div class="receipt-row"><span>Amount</span><span style="font-weight:700;">৳${total.toFixed(2)}</span></div>
+    <div class="receipt-row"><span>Status</span><span class="badge badge--success">Pending Verification</span></div>
   `;
 
   cart = []; saveCart(); updateCartBadge();
-  showToast('Payment successful! Welcome to your new courses.', 'success');
+  showToast('Order placed! Your payment is being verified.', 'success');
 }
 
 // ===== PROFILE PAGE =====

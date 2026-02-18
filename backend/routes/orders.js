@@ -61,9 +61,12 @@ router.post('/', auth, async (req, res) => {
             return res.status(400).json({ error: 'You have already purchased this course' });
         }
 
-        // Generate transaction ID
-        const txnPrefix = (payment === 'Nagad') ? 'NGD' : 'BKS';
-        const transactionId = `${txnPrefix}${Date.now().toString(36).toUpperCase()}${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+        // Use provided transaction ID or generate one
+        let { transactionId } = req.body;
+        if (!transactionId) {
+            const txnPrefix = (payment === 'Nagad') ? 'NGD' : 'BKS';
+            transactionId = `${txnPrefix}${Date.now().toString(36).toUpperCase()}${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+        }
 
         // Create the order
         const order = await Order.create({
