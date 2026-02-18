@@ -769,9 +769,7 @@ async function completeOrder() {
   for (const item of cart) {
     try {
       lastOrder = await api.purchase(item.id, selectedPayment, payPhone, txnId);
-      if (!purchasedCourses.includes(String(item.id))) {
-        purchasedCourses.push(String(item.id));
-      }
+      /* Access granted after admin verification */
     } catch (err) {
       console.warn('Purchase error for course', item.id, err.message);
       showToast(err.message || 'Order failed', 'error');

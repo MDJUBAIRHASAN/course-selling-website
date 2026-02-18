@@ -79,13 +79,13 @@ router.post('/', auth, async (req, res) => {
             payment: payment || 'bKash',
             paymentPhone: paymentPhone || '',
             transactionId,
-            status: 'completed',
+            status: 'pending',
             avatar: user.avatar
         });
 
-        // Add course to user's purchased courses
-        user.purchasedCourses.push(courseId);
-        await user.save();
+        // Course access will be granted upon admin verification (status -> completed)
+        // user.purchasedCourses.push(courseId);
+        // await user.save();
 
         // Update course stats
         course.students += 1;
@@ -102,12 +102,22 @@ router.post('/', auth, async (req, res) => {
 router.put('/:id', auth, adminOnly, async (req, res) => {
     try {
         const { status } = req.body;
-        const order = await Order.findByIdAndUpdate(
-            req.params.id,
-            { status },
-            { new: true }
-        );
+
+        // Find order first
+        const order = await Order.findById(req.params.id);
         if (!order) return res.status(404).json({ error: 'Order not found' });
+
+        // Update status
+        order.status = status;
+        await order.save();
+
+        // If status is completed, grant access
+        if (status === 'completed') {
+            await User.findByIdAndUpdate(order.userId, {
+                $addToSet: { purchasedCourses: order.courseId }
+            });
+        }
+
         res.json(order);
     } catch (err) {
         res.status(400).json({ error: err.message });
