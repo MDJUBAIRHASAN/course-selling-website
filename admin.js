@@ -111,7 +111,7 @@ function renderDashboard() {
   const totalRevenue = COURSES.reduce((s, c) => s + (c.revenue || 0), 0);
   const totalStudents = COURSES.reduce((s, c) => s + (c.students || 0), 0);
   document.getElementById('statCourses').textContent = COURSES.length;
-  document.getElementById('statStudents').textContent = (totalStudents / 1000).toFixed(0) + 'k';
+  document.getElementById('statOrders').textContent = ORDERS.length;
   document.getElementById('statRevenue').textContent = '$' + (totalRevenue / 1000).toFixed(0) + 'k';
   document.getElementById('statUsers').textContent = USERS.length;
   renderRecentOrders();
