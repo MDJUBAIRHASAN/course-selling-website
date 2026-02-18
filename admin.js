@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSearch();
   } catch (err) {
     console.error('Auth failed:', err);
-    alert('Admin Crash: ' + err.message);
     localStorage.removeItem('sf_admin_token');
     showAdminLogin();
   }
@@ -132,7 +131,7 @@ function renderRecentOrders() {
 }
 
 function renderTopCourses() {
-  const container = document.getElementById('topCoursesBody');
+  const container = document.getElementById('topCoursesList');
   if (!container) return;
   const top = [...COURSES].sort((a, b) => (b.students || 0) - (a.students || 0)).slice(0, 5);
   container.innerHTML = top.map((c, i) => `
