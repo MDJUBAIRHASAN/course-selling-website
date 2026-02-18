@@ -104,7 +104,7 @@ function initRouting() {
 function showSection(id) {
   document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sidebar__link').forEach(l => l.classList.remove('active'));
-  const section = document.getElementById('section-' + id);
+  const section = document.getElementById('sec-' + id);
   const link = document.querySelector(`.sidebar__link[data-section="${id}"]`);
   if (section) section.classList.add('active');
   if (link) link.classList.add('active');
