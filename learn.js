@@ -160,22 +160,22 @@ const QNA_DATA = [
 const ANNOUNCEMENTS = [
     {
         author: 'Dr. Angela Yu', initials: 'AY', date: 'Feb 14, 2026',
-        title: '🎉 New Module Added: AI Integration with Web Apps',
+        title: '<i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent-2)"></i> New Module Added: AI Integration with Web Apps',
         body: 'I\'ve just added a bonus module on integrating AI APIs (OpenAI, Gemini) into your web applications.'
     },
     {
         author: 'Dr. Angela Yu', initials: 'AY', date: 'Feb 10, 2026',
-        title: '🔧 Updated: Node.js Section for v22 LTS',
+        title: '<i class="fa-solid fa-wrench" style="color:var(--text-muted)"></i> Updated: Node.js Section for v22 LTS',
         body: 'The Node.js section has been fully updated to reflect the latest v22 LTS changes.'
     },
     {
         author: 'Dr. Angela Yu', initials: 'AY', date: 'Feb 5, 2026',
-        title: '📢 Live Q&A Session This Saturday',
+        title: '<i class="fa-solid fa-bullhorn" style="color:var(--accent-4)"></i> Live Q&A Session This Saturday',
         body: 'I\'ll be hosting a live Q&A session this Saturday at 2 PM EST. Link will be shared in the community.'
     },
     {
         author: 'Dr. Angela Yu', initials: 'AY', date: 'Jan 28, 2026',
-        title: '✅ New Practice Exercises Added',
+        title: '<i class="fa-solid fa-check-circle" style="color:var(--success)"></i> New Practice Exercises Added',
         body: 'I\'ve added 15 new practice exercises across all modules.'
     }
 ];
@@ -255,7 +255,7 @@ async function loadCourseData() {
             COURSE = {
                 id: courseId,
                 title: courseData.title || 'Course',
-                instructor: { name: instructor, initials, bio: `Instructor • ${courseData.category || 'Course'}` },
+                instructor: { name: instructor, initials, bio: `Instructor &bull; ${courseData.category || 'Course'}` },
                 skills: courseData.skills || courseData.tags || FALLBACK_COURSE.skills,
                 modules
             };
@@ -288,7 +288,7 @@ async function loadCourseData() {
     // Fallback: use hardcoded data
     COURSE = {
         ...FALLBACK_COURSE,
-        instructor: { name: FALLBACK_COURSE.instructor, initials: 'AY', bio: 'Lead Instructor • Full-Stack Developer • 2M+ Students' },
+        instructor: { name: FALLBACK_COURSE.instructor, initials: 'AY', bio: 'Lead Instructor &bull; Full-Stack Developer &bull; 2M+ Students' },
         modules: FALLBACK_COURSE.modules.map(m => ({
             ...m,
             lessons: m.lessons.map(l => ({ ...l, completed: false }))
@@ -325,7 +325,7 @@ function renderCurriculum() {
             <div class="module__body">
                 ${mod.lessons.map((les, li) => `
                     <div class="lesson ${les.completed ? 'completed' : ''} ${mi === currentModuleIndex && li === currentLessonIndex ? 'active' : ''}" data-module="${mi}" data-lesson="${li}" onclick="selectLesson(${mi},${li})">
-                        <div class="lesson__check">${les.completed ? '✓' : ''}</div>
+                        <div class="lesson__check">${les.completed ? '<i class="fa-solid fa-check"></i>' : ''}</div>
                         <div class="lesson__info">
                             <div class="lesson__name">${les.title}</div>
                             <div class="lesson__type">
@@ -388,7 +388,7 @@ function selectLesson(mi, li) {
     if (moduleEl && !moduleEl.classList.contains('open')) moduleEl.classList.add('open');
 
     // Update video player
-    document.getElementById('lessonTag').textContent = `Module ${mi + 1} • Lesson ${li + 1}`;
+    document.getElementById('lessonTag').innerHTML = `Module ${mi + 1} &bull; Lesson ${li + 1}`;
     document.getElementById('lessonTitle').textContent = les.title;
     document.getElementById('lessonDur').textContent = les.duration;
 
@@ -542,7 +542,7 @@ function nextLesson() {
 }
 
 function autoAdvance() {
-    showToast('✅ Lesson completed!', 'success');
+    showToast('Lesson completed!', 'success');
     setTimeout(() => nextLesson(), 1500);
 }
 
@@ -738,13 +738,13 @@ function renderResources() {
         return;
     }
     const typeIcons = {
-        pdf: '📄', code: '💻', zip: '📦', link: '🔗', img: '🖼️'
+        pdf: '<i class="fa-solid fa-file-pdf"></i>', code: '<i class="fa-solid fa-file-code"></i>', zip: '<i class="fa-solid fa-file-zipper"></i>', link: '<i class="fa-solid fa-link"></i>', img: '<i class="fa-solid fa-image"></i>'
     };
     container.innerHTML = RESOURCES.map(res => {
         const iconClass = `resource-item__icon--${res.type}`;
         return `
         <div class="resource-item">
-            <div class="resource-item__icon ${iconClass}">${typeIcons[res.type] || '📄'}</div>
+            <div class="resource-item__icon ${iconClass}">${typeIcons[res.type] || '<i class="fa-regular fa-file"></i>'}</div>
             <div class="resource-item__info">
                 <div class="resource-item__name">${res.name}</div>
                 <div class="resource-item__meta">${res.size || res.type.toUpperCase()}</div>

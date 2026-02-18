@@ -2,14 +2,14 @@
 let COURSES = [];
 
 const CATEGORIES = [
-  { name: "Development", icon: "💻", color: "linear-gradient(135deg, #667eea, #764ba2)", count: "2,400+" },
-  { name: "Design", icon: "🎨", color: "linear-gradient(135deg, #4facfe, #00f2fe)", count: "1,800+" },
-  { name: "Data Science", icon: "📊", color: "linear-gradient(135deg, #f093fb, #f5576c)", count: "1,200+" },
-  { name: "Business", icon: "💼", color: "linear-gradient(135deg, #89f7fe, #66a6ff)", count: "950+" },
-  { name: "Marketing", icon: "📣", color: "linear-gradient(135deg, #ff9a9e, #fecfef)", count: "800+" },
-  { name: "AI & ML", icon: "🤖", color: "linear-gradient(135deg, #a1c4fd, #c2e9fb)", count: "600+" },
-  { name: "Cloud", icon: "☁️", color: "linear-gradient(135deg, #fbc2eb, #a6c1ee)", count: "550+" },
-  { name: "Security", icon: "🔒", color: "linear-gradient(135deg, #d299c2, #fef9d7)", count: "400+" }
+  { name: "Development", icon: "fa-solid fa-laptop-code", color: "linear-gradient(135deg, #667eea, #764ba2)", count: "2,400+" },
+  { name: "Design", icon: "fa-solid fa-paintbrush", color: "linear-gradient(135deg, #4facfe, #00f2fe)", count: "1,800+" },
+  { name: "Data Science", icon: "fa-solid fa-chart-pie", color: "linear-gradient(135deg, #f093fb, #f5576c)", count: "1,200+" },
+  { name: "Business", icon: "fa-solid fa-briefcase", color: "linear-gradient(135deg, #89f7fe, #66a6ff)", count: "950+" },
+  { name: "Marketing", icon: "fa-solid fa-bullhorn", color: "linear-gradient(135deg, #ff9a9e, #fecfef)", count: "800+" },
+  { name: "AI & ML", icon: "fa-solid fa-robot", color: "linear-gradient(135deg, #a1c4fd, #c2e9fb)", count: "600+" },
+  { name: "Cloud", icon: "fa-solid fa-cloud", color: "linear-gradient(135deg, #fbc2eb, #a6c1ee)", count: "550+" },
+  { name: "Security", icon: "fa-solid fa-shield-halved", color: "linear-gradient(135deg, #d299c2, #fef9d7)", count: "400+" }
 ];
 
 const TESTIMONIALS = [
@@ -324,7 +324,7 @@ function renderCategories() {
   const grid = document.getElementById('categoriesGrid');
   grid.innerHTML = CATEGORIES.map((cat, i) => `
     <div class="category-card anim-fade-up ${i > 0 ? 'anim-delay-' + Math.min(i, 4) : ''}" onclick="filterByCategory('${cat.name}')">
-      <div class="category-card__icon" style="background: ${cat.color};">${cat.icon}</div>
+      <div class="category-card__icon" style="background: ${cat.color};"><i class="${cat.icon}"></i></div>
       <div class="category-card__name">${cat.name}</div>
       <div class="category-card__count">${cat.count} courses</div>
     </div>
@@ -354,7 +354,7 @@ function renderCourseCard(course) {
         <h3 class="course-card__title">${course.title}</h3>
         <div class="course-card__instructor">${course.instructor}</div>
         <div class="course-card__meta">
-          <span class="course-card__rating">★ ${course.rating} <span style="color:var(--text-muted)">(${((course.reviews || 0) / 1000).toFixed(1)}k)</span></span>
+          <span class="course-card__rating"><i class="fa-solid fa-star" style="color:var(--accent-4)"></i> ${course.rating} <span style="color:var(--text-muted)">(${((course.reviews || 0) / 1000).toFixed(1)}k)</span></span>
           <span>${course.duration || ''}</span>
           <span>${course.level || ''}</span>
         </div>
@@ -386,7 +386,7 @@ function renderTestimonials() {
   const grid = document.getElementById('testimonialsGrid');
   grid.innerHTML = TESTIMONIALS.map((t, i) => `
     <div class="testimonial-card anim-fade-up ${i > 0 ? 'anim-delay-' + i : ''}">
-      <div class="testimonial-card__stars">★★★★★</div>
+      <div class="testimonial-card__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
       <p class="testimonial-card__text">"${t.text}"</p>
       <div class="testimonial-card__author">
         <div class="testimonial-card__avatar" style="background: ${t.avatar};">${t.name.split(' ').map(n => n[0]).join('')}</div>
@@ -466,7 +466,7 @@ function renderCourseDetail(id) {
         <h1 class="cd-info__title">${course.title}</h1>
         <p class="cd-info__desc">${course.description || ''}</p>
         <div class="cd-info__meta">
-          <span class="cd-info__rating">★ ${course.rating} <span style="color:var(--text-muted)">(${((course.reviews || 0) / 1000).toFixed(1)}k reviews)</span></span>
+          <span class="cd-info__rating"><i class="fa-solid fa-star" style="color:var(--accent-4)"></i> ${course.rating} <span style="color:var(--text-muted)">(${((course.reviews || 0) / 1000).toFixed(1)}k reviews)</span></span>
           <span class="cd-info__meta-item">${((course.students || 0) / 1000).toFixed(0)}k students</span>
           <span class="cd-info__meta-item">${course.duration || ''} total</span>
           <span class="cd-info__meta-item">${course.level || ''}</span>
@@ -476,8 +476,8 @@ function renderCourseDetail(id) {
       <div class="cd-purchase-card">
         <div class="cd-purchase-card__preview" style="background: ${course.image};"><div class="cd-purchase-card__play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--bg-primary)"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>
         ${isCourseOwned(course.id) ? `
-        <div style="padding:12px 0; text-align:center;"><span style="color:var(--success); font-weight:600;">✅ You own this course</span></div>
-        <a href="learn.html?id=${course.id}" class="btn btn--primary btn--full btn--lg" style="justify-content:center;">▶ Continue Learning</a>
+        <div style="padding:12px 0; text-align:center;"><span style="color:var(--success); font-weight:600;"><i class="fa-solid fa-circle-check"></i> You own this course</span></div>
+        <a href="learn.html?id=${course.id}" class="btn btn--primary btn--full btn--lg" style="justify-content:center;"><i class="fa-solid fa-play"></i> Continue Learning</a>
         ` : `
         <div class="cd-purchase-card__price">$${course.price}${course.originalPrice ? `<span class="cd-purchase-card__original">$${course.originalPrice}</span>` : ''}</div>
         ${discount ? `<div class="cd-purchase-card__discount">${discount}% off — Limited time offer!</div>` : ''}
@@ -489,8 +489,7 @@ function renderCourseDetail(id) {
           <li>${checkSvg} ${course.lessons || 40} downloadable resources</li>
           <li>${checkSvg} Full lifetime access</li>
           <li>${checkSvg} Access on mobile and TV</li>
-          <li>${checkSvg} Certificate of completion</li>
-          <li>${checkSvg} 30-day money-back guarantee</li>
+          <li>${checkSvg} <span onclick="showToast('Certificate of Completion downloaded!', 'success');">Certificate of completion</span></li>
         </ul>
       </div>
     </div></div>
@@ -505,7 +504,7 @@ function renderCourseDetail(id) {
                 <span style="font-size:0.85rem; color:var(--text-muted);">${(mod.lessons || []).length} lessons</span>
               </div>
               <div class="curriculum-module__lessons${mi === 0 ? ' open' : ''}">
-                ${(mod.lessons || []).map((l, li) => `<div class="curriculum-lesson"><span><span class="curriculum-lesson__icon">▶</span> ${typeof l === 'string' ? l : (l.title || 'Lesson')}</span><span style="color:var(--text-muted); font-size:0.8rem;">${5 + Math.floor(Math.random() * 20)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}</span></div>`).join('')}
+                ${(mod.lessons || []).map((l, li) => `<div class="curriculum-lesson"><span><span class="curriculum-lesson__icon"><i class="fa-solid fa-circle-play"></i></span> ${typeof l === 'string' ? l : (l.title || 'Lesson')}</span><span style="color:var(--text-muted); font-size:0.8rem;">${5 + Math.floor(Math.random() * 20)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}</span></div>`).join('')}
               </div>
             </div>`).join('')}
         </div>
@@ -519,14 +518,14 @@ function renderCourseDetail(id) {
       </div>
       ${(course.reviewsList || []).length ? `
       <div class="cd-section">
-        <h2 class="cd-section__title">⭐ Student Reviews</h2>
+        <h2 class="cd-section__title"><i class="fa-solid fa-star" style="color:var(--accent-4)"></i> Student Reviews</h2>
         ${course.reviewsList.map(r => `
           <div class="review-card">
             <div class="review-card__header">
               <div class="review-card__avatar" style="background:${r.avatar};">${r.name.split(' ').map(n => n[0]).join('')}</div>
               <div><div class="review-card__name">${r.name}</div><div class="review-card__date">${r.date}</div></div>
             </div>
-            <div class="review-card__stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+            <div class="review-card__stars">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}${'<i class="fa-regular fa-star"></i>'.repeat(5 - r.rating)}</div>
             <p class="review-card__text">${r.text}</p>
           </div>`).join('')}
       </div>` : ''}
@@ -569,7 +568,7 @@ function renderCart() {
   const container = document.getElementById('cartItems');
   const summary = document.getElementById('cartSummary');
   if (cart.length === 0) {
-    container.innerHTML = `<div class="cart-empty"><div class="cart-empty__icon">🛒</div><h3 class="cart-empty__title">Your cart is empty</h3><p class="cart-empty__desc">Explore our courses and find something to learn!</p><a href="#catalog" class="btn btn--primary btn--lg" data-page="catalog">Browse Courses</a></div>`;
+    container.innerHTML = `<div class="cart-empty"><div class="cart-empty__icon"><i class="fa-solid fa-cart-shopping"></i></div><h3 class="cart-empty__title">Your cart is empty</h3><p class="cart-empty__desc">Explore our courses and find something to learn!</p><a href="#catalog" class="btn btn--primary btn--lg" data-page="catalog">Browse Courses</a></div>`;
     summary.innerHTML = '';
     container.querySelector('[data-page]')?.addEventListener('click', (e) => { e.preventDefault(); window.location.hash = 'catalog'; });
     return;
@@ -579,7 +578,7 @@ function renderCart() {
     if (!course) return '';
     return `<div class="cart-item">
       <div class="cart-item__img" style="background:${course.image};"></div>
-      <div><div class="cart-item__title">${course.title}</div><div class="cart-item__instructor">by ${course.instructor}</div><button class="cart-item__remove" onclick="removeFromCart('${course.id}')">✕ Remove</button></div>
+      <div><div class="cart-item__title">${course.title}</div><div class="cart-item__instructor">by ${course.instructor}</div><button class="cart-item__remove" onclick="removeFromCart('${course.id}')"><i class="fa-solid fa-trash"></i> Remove</button></div>
       <div class="cart-item__price">$${course.price.toFixed(2)}</div>
     </div>`;
   }).join('');
@@ -705,7 +704,7 @@ function renderCheckout() {
       <!-- CONFIRMATION (hidden, shown after order) -->
       <div id="confirmationStep" style="display:none;">
         <div style="text-align:center; padding:30px 20px;">
-          <div style="font-size:3.5rem; margin-bottom:16px;">🎉</div>
+          <div style="font-size:3.5rem; margin-bottom:16px; color:var(--success);"><i class="fa-solid fa-circle-check"></i></div>
           <h2 style="font-family:var(--font-display); margin-bottom:8px;">Order Placed Successfully!</h2>
           <p style="color:var(--text-secondary); margin-bottom:24px;">Your payment is being verified. You'll get access shortly.</p>
           <div class="receipt-box" id="receiptBox"></div>
@@ -792,7 +791,7 @@ async function completeOrder() {
       payment: o.payment,
       transactionId: o.transactionId
     }));
-  } catch { }
+  } catch (e) { console.error('Failed to refresh history:', e); }
 
   // Hide checkout form, show confirmation
   document.querySelector('.checkout-billing').style.display = 'none';
@@ -924,42 +923,76 @@ async function saveProfile() {
 function renderMyCourses() {
   if (!currentUser) { window.location.hash = 'home'; showToast('Please log in to view your courses.', 'info'); return; }
   const container = document.getElementById('myCoursesContent');
-  const owned = COURSES.filter(c => purchasedCourses.includes(String(c.id)));
-  if (owned.length === 0) {
-    container.innerHTML = `
-      <div class="my-courses-empty">
-        <div class="my-courses-empty__icon">📚</div>
-        <h3 class="my-courses-empty__title">No courses yet</h3>
-        <p class="my-courses-empty__desc">Start your learning journey by enrolling in a course!</p>
-        <a href="#catalog" class="btn btn--primary btn--lg" onclick="event.preventDefault();window.location.hash='catalog';">Browse Courses</a>
-      </div>`;
+
+  // Get owned (completed) courses
+  const ownedIds = new Set(purchasedCourses);
+
+  // Get pending courses from history
+  const pendingOrders = purchaseHistory.filter(o => o.status === 'pending');
+  const pendingIds = new Set(pendingOrders.map(o => String(o.courseId)));
+
+  // Combine for display
+  const displayItems = [];
+
+  // Add owned courses
+  COURSES.forEach(c => {
+    if (ownedIds.has(String(c.id))) {
+      displayItems.push({ ...c, _status: 'completed' });
+    }
+  });
+
+  // Add pending courses (if not already owned)
+  pendingOrders.forEach(o => {
+    if (!ownedIds.has(String(o.courseId))) {
+      const c = COURSES.find(x => String(x.id) === String(o.courseId));
+      if (c) displayItems.push({ ...c, _status: 'pending' });
+    }
+  });
+
+  if (displayItems.length === 0) {
+    container.innerHTML = `<div class="my-courses-empty"><div class="my-courses-empty__icon"><i class="fa-solid fa-heart-crack"></i></div><h3 class="my-courses-empty__title">Your wishlist is empty</h3><p class="my-courses-empty__desc">Save courses you're interested in.</p><a href="#catalog" class="btn btn--primary" onclick="showPage('home'); document.getElementById('catalog').scrollIntoView();">Browse Courses</a></div>`;
     return;
   }
-  const progress = getCourseProgress();
-  container.innerHTML = `<div class="my-courses-grid">${owned.map(c => {
-    const isCompleted = progress.pct === 100;
+
+  const progress = getCourseProgress(); // This might need adjustment for pending courses (returns 0)
+
+  container.innerHTML = `<div class="my-courses-grid">${displayItems.map(c => {
+    const isPending = c._status === 'pending';
+    const isCompleted = !isPending && (getCourseProgress(c.id).pct === 100);
+    const itemProgress = isPending ? { pct: 0, completed: 0, total: 0 } : getCourseProgress(c.id);
+
     return `
-    <div class="my-course-card">
+    <div class="my-course-card" style="${isPending ? 'opacity:0.8;' : ''}">
       <div class="my-course-card__banner" style="background:${c.image};">
-        <span class="my-course-card__badge ${isCompleted ? 'my-course-card__badge--completed' : 'my-course-card__badge--progress'}">
-          ${isCompleted ? '✅ Completed' : '📖 In Progress'}
+        <span class="my-course-card__badge ${isCompleted ? 'my-course-card__badge--completed' : isPending ? 'my-course-card__badge--pending' : 'my-course-card__badge--progress'}" style="${isPending ? 'background:var(--warning);color:#000;' : ''}">
+          ${isCompleted ? '<i class="fa-solid fa-circle-check"></i> Completed' : isPending ? '<i class="fa-solid fa-lock"></i> Pending Verification' : '<i class="fa-solid fa-book-open"></i> In Progress'}
         </span>
       </div>
       <div class="my-course-card__body">
         <div class="my-course-card__title">${c.title}</div>
         <div class="my-course-card__instructor">by ${c.instructor}</div>
+        
+        ${!isPending ? `
         <div class="my-course-card__progress">
           <div class="my-course-card__progress-bar">
-            <div class="my-course-card__progress-fill" style="width:${progress.pct}%;"></div>
+            <div class="my-course-card__progress-fill" style="width:${itemProgress.pct}%;"></div>
           </div>
           <div class="my-course-card__progress-text">
-            <span>${progress.pct}% complete</span>
-            <span>${progress.completed}/${progress.total} lessons</span>
+            <span>${itemProgress.pct}% complete</span>
+            <span>${itemProgress.completed}/${itemProgress.total} lessons</span>
           </div>
+        </div>` : `
+        <div class="my-course-card__progress">
+           <p style="font-size:0.8rem;color:var(--warning);margin-top:8px;"><i class="fa-solid fa-clock"></i> Awaiting admin approval</p>
         </div>
+        `}
+
         <div class="my-course-card__actions">
-          <a href="learn.html?id=${c.id}" class="btn btn--primary">Continue Learning</a>
-          <a href="#course/${c.id}" class="btn btn--outline" onclick="event.preventDefault();window.location.hash='course/${c.id}';">Details</a>
+          ${isPending ?
+        `<button class="btn btn--outline" disabled style="opacity:0.5;cursor:not-allowed;width:100%;">Access Locked</button>` :
+        `<a href="learn.html?id=${c.id}" class="btn btn--primary">Continue Learning</a>
+             <a href="#course/${c.id}" class="btn btn--outline" onclick="event.preventDefault();window.location.hash='course/${c.id}';">Details</a>`
+      }
         </div>
       </div>
     </div>`;
@@ -971,7 +1004,7 @@ function renderPurchaseHistory() {
   if (!currentUser) { window.location.hash = 'home'; showToast('Please log in to view purchase history.', 'info'); return; }
   const container = document.getElementById('purchaseHistoryContent');
   if (purchaseHistory.length === 0) {
-    container.innerHTML = '<div class="purchase-history-empty"><p style="font-size:3rem;margin-bottom:16px;">🧾</p><h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:8px;color:var(--text-primary);">No purchases yet</h3><p>Your purchase history will appear here after you buy a course.</p></div>';
+    container.innerHTML = '<div class="purchase-history-empty"><div style="font-size:3rem;margin-bottom:16px;color:var(--text-muted);"><i class="fa-solid fa-receipt"></i></div><h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:700;margin-bottom:8px;color:var(--text-primary);">No purchases yet</h3><p>Your purchase history will appear here after you buy a course.</p></div>';
     return;
   }
   container.innerHTML = `
@@ -987,7 +1020,7 @@ function renderPurchaseHistory() {
               <td style="font-weight:500;color:var(--text-primary);max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.courseTitle}</td>
               <td>${p.date}</td>
               <td style="font-weight:600;color:var(--text-primary);">$${(p.price || 0).toFixed(2)}</td>
-              <td><span class="purchase-status purchase-status--${p.status}">${p.status === 'completed' ? '✅ Completed' : '↩️ Refunded'}</span></td>
+              <td><span class="purchase-status purchase-status--${p.status}">${p.status === 'completed' ? '<i class="fa-solid fa-circle-check"></i> Completed' : p.status === 'refunded' ? '<i class="fa-solid fa-arrow-rotate-left"></i> Refunded' : '<i class="fa-solid fa-clock"></i> Pending'}</span></td>
               <td><a href="learn.html" class="btn btn--primary btn--sm">Learn</a></td>
             </tr>
           `).join('')}
@@ -1001,7 +1034,12 @@ function showToast(message, type = 'info') {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
   toast.className = `toast toast--${type}`;
-  toast.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span> ${message}`;
+  const icons = {
+    success: '<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>',
+    error: '<i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i>',
+    info: '<i class="fa-solid fa-circle-info" style="color:var(--accent-2)"></i>'
+  };
+  toast.innerHTML = `<span style="font-size:1.1rem">${icons[type] || icons.info}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; setTimeout(() => toast.remove(), 300); }, 3000);
 }

@@ -31,7 +31,7 @@ function showAdminLogin() {
   document.getElementById('adminApp').innerHTML = `
     <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg-primary);">
       <div style="width:100%;max-width:400px;padding:40px;background:var(--bg-card);border-radius:16px;border:1px solid var(--border-color);">
-        <h2 style="font-family:var(--font-display);text-align:center;margin-bottom:8px;">🔐 Admin Login</h2>
+        <h2 style="font-family:var(--font-display);text-align:center;margin-bottom:8px;"><i class="fa-solid fa-lock" style="color:var(--accent-1)"></i> Admin Login</h2>
         <p style="text-align:center;color:var(--text-muted);margin-bottom:24px;font-size:0.9rem;">Sign in to access the admin panel</p>
         <form id="adminLoginForm">
           <div class="form-group"><label>Email</label><input type="email" id="adminEmail" placeholder="admin@skillforge.com" required></div>
@@ -47,8 +47,11 @@ function showAdminLogin() {
     const password = document.getElementById('adminPass').value;
     const errEl = document.getElementById('adminLoginError');
     try {
+      console.log('Attempting admin login with:', email);
       const data = await api.login(email, password);
+      console.log('Login response:', data);
       if (data.user.role !== 'admin' && data.user.role !== 'instructor') {
+        console.warn('Login denied: Role is ' + data.user.role);
         errEl.textContent = 'Admin or instructor access required.';
         errEl.style.display = 'block';
         return;
@@ -56,8 +59,10 @@ function showAdminLogin() {
       adminToken = data.token;
       localStorage.setItem('sf_admin_token', data.token);
       setToken(data.token);
+      console.log('Admin login successful, reloading...');
       location.reload();
     } catch (err) {
+      console.error('Admin login error:', err);
       errEl.textContent = err.message || 'Login failed';
       errEl.style.display = 'block';
     }
@@ -238,9 +243,9 @@ function renderCourses(filter = {}) {
       <td><span class="badge badge--${c.status === 'published' ? 'success' : 'warning'}">${c.status}</span></td>
       <td>
         <div class="table-actions">
-          <button class="btn btn--ghost btn--sm" onclick="openCourseContentModal('${c._id}')">📚</button>
-          <button class="btn btn--ghost btn--sm" onclick="editCourse('${c._id}')">✏️</button>
-          <button class="btn btn--ghost btn--sm" onclick="deleteCourse('${c._id}')">🗑</button>
+          <button class="btn btn--ghost btn--sm" onclick="openCourseContentModal('${c._id}')"><i class="fa-solid fa-book-open"></i></button>
+          <button class="btn btn--ghost btn--sm" onclick="editCourse('${c._id}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn btn--ghost btn--sm" onclick="deleteCourse('${c._id}')"><i class="fa-solid fa-trash"></i></button>
         </div>
       </td>
     </tr>`).join('');
@@ -266,8 +271,8 @@ function renderUsers(filter = {}) {
       <td><span class="badge badge--${u.status === 'active' ? 'success' : 'danger'}">${u.status}</span></td>
       <td>
         <div class="table-actions">
-          <button class="btn btn--ghost btn--sm" onclick="editUser('${u._id}')">✏️</button>
-          <button class="btn btn--ghost btn--sm" onclick="deleteUser('${u._id}')">🗑</button>
+          <button class="btn btn--ghost btn--sm" onclick="editUser('${u._id}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="btn btn--ghost btn--sm" onclick="deleteUser('${u._id}')"><i class="fa-solid fa-trash"></i></button>
         </div>
       </td>
     </tr>`).join('');
@@ -295,7 +300,7 @@ function renderOrders(filter = {}) {
       <td><span class="badge badge--${o.status === 'completed' ? 'success' : o.status === 'pending' ? 'warning' : 'danger'}">${o.status}</span></td>
       <td>
         <div class="table-actions">
-          <button class="btn btn--ghost btn--sm" onclick="viewOrder('${o._id}')">👁</button>
+          <button class="btn btn--ghost btn--sm" onclick="viewOrder('${o._id}')"><i class="fa-solid fa-eye"></i></button>
         </div>
       </td>
     </tr>`).join('');
@@ -511,8 +516,8 @@ function renderCourseContentModal(course, content) {
     </div>
 
     <div style="display:flex;gap:4px;margin-bottom:20px;background:var(--bg-card);padding:4px;border-radius:10px;">
-        <button class="content-tab active" onclick="switchContentTab(this, 'modulesPanel')" style="flex:1;padding:10px;border:none;border-radius:8px;background:var(--btn-primary-bg, var(--gradient-primary));color:#fff;cursor:pointer;font-weight:600;font-size:0.85rem;">📚 Modules & Lessons</button>
-        <button class="content-tab" onclick="switchContentTab(this, 'resourcesPanel')" style="flex:1;padding:10px;border:none;border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer;font-weight:600;font-size:0.85rem;">📦 Resources</button>
+        <button class="content-tab active" onclick="switchContentTab(this, 'modulesPanel')" style="flex:1;padding:10px;border:none;border-radius:8px;background:var(--btn-primary-bg, var(--gradient-primary));color:#fff;cursor:pointer;font-weight:600;font-size:0.85rem;"> Modules & Lessons</button>
+        <button class="content-tab" onclick="switchContentTab(this, 'resourcesPanel')" style="flex:1;padding:10px;border:none;border-radius:8px;background:transparent;color:var(--text-muted);cursor:pointer;font-weight:600;font-size:0.85rem;"> Resources</button>
     </div>
 
     <div id="modulesPanel">
@@ -540,7 +545,7 @@ function renderModuleBlock(courseId, mod, mi) {
             <span style="font-weight:700;color:var(--accent-1);font-size:0.8rem;flex-shrink:0;">M${mi + 1}</span>
             <span style="flex:1;font-weight:600;font-size:0.9rem;">${mod.title || 'Untitled Module'}</span>
             <span style="font-size:0.75rem;color:var(--text-muted);">${(mod.lessons || []).length} lessons</span>
-            <button onclick="event.stopPropagation();deleteModule('${courseId}', ${mi})" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:0.8rem;padding:4px 8px;" title="Delete module">🗑</button>
+            <button onclick="event.stopPropagation();deleteModule('${courseId}', ${mi})" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:0.8rem;padding:4px 8px;" title="Delete module"><i class="fa-solid fa-trash"></i></button>
         </div>
         <div style="padding:12px 16px;">
             <div class="form-group" style="margin-bottom:10px;">
@@ -559,10 +564,10 @@ function renderLessonRow(courseId, mi, les, li) {
   const typeOptions = ['video', 'quiz', 'exercise', 'reading'].map(t =>
     `<option ${les.type === t ? 'selected' : ''}>${t}</option>`
   ).join('');
-  const typeIcons = { video: '🎬', quiz: '❓', exercise: '💻', reading: '📖' };
+  const typeIcons = { video: '<i class="fa-solid fa-video"></i>', quiz: '<i class="fa-solid fa-circle-question"></i>', exercise: '<i class="fa-solid fa-laptop-code"></i>', reading: '<i class="fa-solid fa-book-open-reader"></i>' };
   return `
     <div style="display:grid;grid-template-columns:auto 1fr 100px 80px 32px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:0.85rem;">
-        <span style="color:var(--text-muted);font-size:0.75rem;width:28px;text-align:center;">${typeIcons[les.type] || '📄'}</span>
+        <span style="color:var(--text-muted);font-size:0.75rem;width:28px;text-align:center;">${typeIcons[les.type] || '<i class="fa-regular fa-file"></i>'}</span>
         <input type="text" value="${les.title || ''}" placeholder="Lesson title"
             onchange="updateLesson('${courseId}', ${mi}, ${li}, 'title', this.value)" style="padding:6px 10px;font-size:0.85rem;">
         <select onchange="updateLesson('${courseId}', ${mi}, ${li}, 'type', this.value)" style="padding:6px;font-size:0.8rem;">${typeOptions}</select>
@@ -676,8 +681,8 @@ function showToast(message, type = 'info') {
   if (!container) return;
   const toast = document.createElement('div');
   toast.className = `toast toast--${type}`;
-  const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
-  toast.innerHTML = `<span>${icon}</span> ${message}`;
+  const icon = type === 'success' ? '<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>' : type === 'error' ? '<i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i>' : '<i class="fa-solid fa-circle-info" style="color:var(--accent-2)"></i>';
+  toast.innerHTML = `<span style="font-size:1.1rem">${icon}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; toast.style.transition = '0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
 }

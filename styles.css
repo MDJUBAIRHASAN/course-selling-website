@@ -776,7 +776,8 @@ button {
     align-items: center;
     justify-content: center;
     margin: 0 auto 16px;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    color: #fff;
 }
 
 .category-card__name {
@@ -861,6 +862,7 @@ button {
     margin-bottom: 8px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1661,7 +1663,8 @@ button {
 .cart-empty__icon {
     font-size: 4rem;
     margin-bottom: 20px;
-    opacity: 0.3;
+    opacity: 0.5;
+    color: var(--text-muted);
 }
 
 .cart-empty__title {
@@ -2642,7 +2645,8 @@ button {
 .my-courses-empty__icon {
     font-size: 4rem;
     margin-bottom: 20px;
-    opacity: 0.3;
+    opacity: 0.5;
+    color: var(--text-muted);
 }
 
 .my-courses-empty__title {
