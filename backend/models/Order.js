@@ -57,7 +57,8 @@ const orderSchema = new mongoose.Schema({
 });
 
 // Auto-generate orderId before saving
-orderSchema.pre('save', async function (next) {
+// Auto-generate orderId before validation
+orderSchema.pre('validate', async function (next) {
     if (!this.orderId) {
         const count = await mongoose.model('Order').countDocuments();
         this.orderId = `ORD-${String(count + 2847).padStart(4, '0')}`;
