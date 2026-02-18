@@ -101,6 +101,7 @@ function initRouting() {
   });
 }
 
+// Fixed class name mismatch
 function showSection(id) {
   document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sidebar__link').forEach(l => l.classList.remove('active'));
