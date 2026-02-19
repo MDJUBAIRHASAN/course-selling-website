@@ -63,4 +63,8 @@ const api = {
     // Settings
     getSettings: () => apiFetch('/settings'),
     updateSettings: (data) => apiFetch('/settings', { method: 'PUT', body: JSON.stringify(data) }),
+
+    // Site Config (CMS)
+    getSiteConfig: () => apiFetch('/config'),
+    updateSiteConfig: (data) => apiFetch('/config', { method: 'PUT', body: JSON.stringify(data) }),
 };

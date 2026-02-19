@@ -244,16 +244,16 @@
                             <span class="pulse-dot"></span>
                             New: AI & Machine Learning Track Now Live
                         </div>
-                        <h1 class="hero__title anim-fade-up anim-delay-1">
+                        <h1 class="hero__title anim-fade-up anim-delay-1" id="heroTitle">
                             Unlock Your Potential.<br>
                             <span class="gradient-text">Learn Without Limits.</span>
                         </h1>
-                        <p class="hero__subtitle anim-fade-up anim-delay-2">
+                        <p class="hero__subtitle anim-fade-up anim-delay-2" id="heroSubtitle">
                             Join over 50 million learners worldwide. Access 5,000+ courses from top instructors
                             and industry leaders. Build job-ready skills and earn certificates.
                         </p>
                         <div class="hero__cta anim-fade-up anim-delay-3">
-                            <a href="#catalog" class="btn btn--primary btn--lg" data-page="catalog">
+                            <a href="#catalog" class="btn btn--primary btn--lg" data-page="catalog" id="heroCtaBtn">
                                 Explore Courses
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
@@ -361,27 +361,8 @@
 
             <!-- Stats -->
             <section class="stats">
-                <div class="container stats__grid">
-                    <div class="stat anim-fade-up">
-                        <div class="stat__number" data-count="50">0</div>
-                        <div class="stat__suffix">M+</div>
-                        <div class="stat__label">Active Learners</div>
-                    </div>
-                    <div class="stat anim-fade-up anim-delay-1">
-                        <div class="stat__number" data-count="5000">0</div>
-                        <div class="stat__suffix">+</div>
-                        <div class="stat__label">Expert Courses</div>
-                    </div>
-                    <div class="stat anim-fade-up anim-delay-2">
-                        <div class="stat__number" data-count="200">0</div>
-                        <div class="stat__suffix">+</div>
-                        <div class="stat__label">Industry Partners</div>
-                    </div>
-                    <div class="stat anim-fade-up anim-delay-3">
-                        <div class="stat__number" data-count="95">0</div>
-                        <div class="stat__suffix">%</div>
-                        <div class="stat__label">Satisfaction Rate</div>
-                    </div>
+                <div class="container stats__grid" id="statsGrid">
+                    <!-- Rendered by JS -->
                 </div>
             </section>
 
@@ -711,7 +692,8 @@
                             </svg>
                         </div>
                         <h3>Our Mission</h3>
-                        <p>To democratize education by providing world-class learning experiences accessible to anyone,
+                        <p id="aboutMission">To democratize education by providing world-class learning experiences
+                            accessible to anyone,
                             regardless of their background or location.</p>
                     </div>
                     <div class="about-card anim-fade-up anim-delay-1">
@@ -791,7 +773,7 @@
                             </svg>
                         </div>
                         <h4>Email Us</h4>
-                        <p>support@skillforge.com</p>
+                        <p id="contactEmailDisplay">support@skillforge.com</p>
                     </div>
                     <div class="contact-info__card anim-fade-up anim-delay-1">
                         <div class="contact-info__icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">

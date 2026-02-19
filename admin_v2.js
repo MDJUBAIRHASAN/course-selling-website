@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCharts();
     initModals();
     initSearch();
+    initSiteEditor();
   } catch (err) {
     console.error('Auth failed:', err);
     alert('DEBUG ERROR: ' + err.message);
@@ -686,4 +687,113 @@ function showToast(message, type = 'info') {
   toast.innerHTML = `<span style="font-size:1.1rem">${icon}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; toast.style.transition = '0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+// ===== SITE EDITOR (CMS) =====
+let siteConfig = {};
+
+async function initSiteEditor() {
+  document.getElementById('saveSiteConfigBtn')?.addEventListener('click', saveSiteConfig);
+  try {
+    siteConfig = await api.getSiteConfig();
+    populateSiteEditor();
+  } catch (err) { console.error('Failed to load site config:', err); }
+}
+
+function populateSiteEditor() {
+  // Hero
+  if (siteConfig.hero) {
+    document.getElementById('heroTitle').value = siteConfig.hero.title || '';
+    document.getElementById('heroSubtitle').value = siteConfig.hero.subtitle || '';
+    document.getElementById('heroCtaText').value = siteConfig.hero.ctaText || '';
+    document.getElementById('heroCtaLink').value = siteConfig.hero.ctaLink || '';
+  }
+
+  // Stats
+  const statsList = document.getElementById('statsList');
+  if (statsList && siteConfig.stats) {
+    statsList.innerHTML = siteConfig.stats.map((s, i) => `
+      <div class="form-row-3col" style="align-items:end; border-bottom:1px solid var(--border-color); padding-bottom:12px; margin-bottom:12px;">
+        <div class="form-group" style="margin-bottom:0;"><label>Label</label><input type="text" value="${s.label}" onchange="siteConfig.stats[${i}].label = this.value"></div>
+        <div class="form-group" style="margin-bottom:0;"><label>Value</label><input type="text" value="${s.value}" onchange="siteConfig.stats[${i}].value = this.value"></div>
+        <div class="form-group" style="margin-bottom:0;"><label>Suffix</label><input type="text" value="${s.suffix}" onchange="siteConfig.stats[${i}].suffix = this.value"></div>
+      </div>`).join('');
+  }
+
+  // Testimonials
+  renderTestimonialsEditor();
+
+  // About & Contact
+  if (siteConfig.about) {
+    document.getElementById('aboutTitle').value = siteConfig.about.title || '';
+    document.getElementById('aboutText').value = siteConfig.about.text || '';
+    document.getElementById('aboutMission').value = siteConfig.about.mission || '';
+  }
+  if (siteConfig.contact) {
+    document.getElementById('contactEmail').value = siteConfig.contact.email || '';
+    document.getElementById('contactAddress').value = siteConfig.contact.address || '';
+    document.getElementById('contactPhone').value = siteConfig.contact.phone || '';
+  }
+}
+
+function renderTestimonialsEditor() {
+  const list = document.getElementById('testimonialsList');
+  if (!list) return;
+  list.innerHTML = (siteConfig.testimonials || []).map((t, i) => `
+    <div style="background:var(--bg-primary); padding:16px; border-radius:8px; margin-bottom:12px; border:1px solid var(--border-color);">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+        <h4 style="margin:0;">Testimonial #${i + 1}</h4>
+        <button onclick="removeTestimonialItem(${i})" style="color:var(--danger); background:none; border:none; cursor:pointer;">Remove</button>
+      </div>
+      <div class="form-row-2col">
+        <div class="form-group"><input type="text" placeholder="Name" value="${t.name || ''}" onchange="siteConfig.testimonials[${i}].name = this.value"></div>
+        <div class="form-group"><input type="text" placeholder="Role" value="${t.role || ''}" onchange="siteConfig.testimonials[${i}].role = this.value"></div>
+      </div>
+      <div class="form-group"><textarea placeholder="Testimonial text" rows="2" onchange="siteConfig.testimonials[${i}].text = this.value">${t.text || ''}</textarea></div>
+      <div class="form-group"><input type="text" placeholder="Avatar Color (hex)" value="${t.avatar || '#7c3aed'}" onchange="siteConfig.testimonials[${i}].avatar = this.value"></div>
+    </div>`).join('');
+}
+
+function addTestimonialItem() {
+  if (!siteConfig.testimonials) siteConfig.testimonials = [];
+  siteConfig.testimonials.push({ name: '', role: '', text: '', avatar: '#7c3aed' });
+  renderTestimonialsEditor();
+}
+
+function removeTestimonialItem(index) {
+  siteConfig.testimonials.splice(index, 1);
+  renderTestimonialsEditor();
+}
+
+function showEditorTab(tabName) {
+  document.querySelectorAll('.editor-content').forEach(el => el.style.display = 'none');
+  document.getElementById('editor-' + tabName).style.display = 'block';
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+async function saveSiteConfig() {
+  // Collect values from non-reactive inputs
+  if (!siteConfig.hero) siteConfig.hero = {};
+  siteConfig.hero.title = document.getElementById('heroTitle').value;
+  siteConfig.hero.subtitle = document.getElementById('heroSubtitle').value;
+  siteConfig.hero.ctaText = document.getElementById('heroCtaText').value;
+  siteConfig.hero.ctaLink = document.getElementById('heroCtaLink').value;
+
+  if (!siteConfig.about) siteConfig.about = {};
+  siteConfig.about.title = document.getElementById('aboutTitle').value;
+  siteConfig.about.text = document.getElementById('aboutText').value;
+  siteConfig.about.mission = document.getElementById('aboutMission').value;
+
+  if (!siteConfig.contact) siteConfig.contact = {};
+  siteConfig.contact.email = document.getElementById('contactEmail').value;
+  siteConfig.contact.address = document.getElementById('contactAddress').value;
+  siteConfig.contact.phone = document.getElementById('contactPhone').value;
+
+  try {
+    await api.updateSiteConfig(siteConfig);
+    showToast('Site configuration saved!', 'success');
+  } catch (err) {
+    showToast(err.message, 'error');
+  }
 }

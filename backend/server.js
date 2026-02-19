@@ -24,6 +24,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/content', require('./routes/content'));
 app.use('/api/settings', require('./routes/settings'));
+app.use('/api/config', require('./routes/siteConfig'));
 
 // Fallback: serve index.html for any non-API route
 app.get('*', (req, res) => {

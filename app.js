@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   animateStats();
   initUserDropdown();
   updateAuthUI();
+  fetchSiteConfig();
 });
 
 // ===== ROUTER =====
@@ -1042,4 +1043,65 @@ function showToast(message, type = 'info') {
   toast.innerHTML = `<span style="font-size:1.1rem">${icons[type] || icons.info}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(100%)'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+// ===== SITE CONFIG (CMS) =====
+async function fetchSiteConfig() {
+  try {
+    const config = await api.getSiteConfig();
+    if (config) renderSiteConfig(config);
+  } catch (err) {
+    console.warn('Failed to load site config:', err);
+  }
+}
+
+function renderSiteConfig(config) {
+  // Hero
+  if (config.hero) {
+    if (config.hero.title) document.getElementById('heroTitle').innerHTML = config.hero.title.replace(/\n/g, '<br>') + (config.hero.title.includes('Limit') ? '' : ' <span class="gradient-text">Learn Without Limits.</span>');
+    if (config.hero.subtitle) document.getElementById('heroSubtitle').textContent = config.hero.subtitle;
+    if (config.hero.ctaText) document.getElementById('heroCtaBtn').textContent = config.hero.ctaText;
+    if (config.hero.ctaLink) document.getElementById('heroCtaBtn').href = config.hero.ctaLink;
+  }
+
+  // Stats
+  if (config.stats && config.stats.length > 0) {
+    const statsGrid = document.getElementById('statsGrid');
+    if (statsGrid) {
+      statsGrid.innerHTML = config.stats.map((s, i) => `
+        <div class="stat anim-fade-up anim-delay-${i}">
+            <div class="stat__number" data-count="${s.value}">${s.value}</div>
+            <div class="stat__suffix">${s.suffix || ''}</div>
+            <div class="stat__label">${s.label}</div>
+        </div>`).join('');
+      animateStats(); // Re-run animation
+    }
+  }
+
+  // Testimonials
+  if (config.testimonials && config.testimonials.length > 0) {
+    const testimonialsGrid = document.getElementById('testimonialsGrid');
+    if (testimonialsGrid) {
+      testimonialsGrid.innerHTML = config.testimonials.map((t, i) => `
+        <div class="testimonial-card anim-fade-up anim-delay-${i}">
+            <div class="testimonial-card__quote">"${t.text}"</div>
+            <div class="testimonial-card__author">
+                <div class="testimonial-card__avatar" style="background:${t.avatar || '#7c3aed'};">${t.name[0]}</div>
+                <div class="testimonial-card__info">
+                    <div class="name">${t.name}</div>
+                    <div class="role">${t.role}</div>
+                </div>
+            </div>
+        </div>`).join('');
+    }
+  }
+
+  // About
+  if (config.about) {
+    if (config.about.mission) document.getElementById('aboutMission').textContent = config.about.mission;
+  }
+
+  // Contact
+  if (config.contact) {
+    if (config.contact.email) document.getElementById('contactEmailDisplay').textContent = config.contact.email;
+  }
 }

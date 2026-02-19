@@ -86,6 +86,13 @@
                     </svg>
                     Settings
                 </a>
+                <a href="#site-editor" class="sidebar__link" data-section="site-editor">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    Site Editor
+                </a>
             </nav>
             <div class="sidebar__footer">
                 <div class="sidebar__user">
@@ -607,14 +614,90 @@
                 </div>
             </section>
         </div>
+        </section>
 
-        <!-- Modal Overlay -->
-        <div class="modal-overlay" id="modalOverlay">
-            <div class="modal" id="modalContent"></div>
-        </div>
+        <!-- Site Editor Section -->
+        <section class="content-section" id="sec-site-editor">
+            <div class="content__header">
+                <div>
+                    <h1 class="content__title">Site Editor</h1>
+                    <p class="content__subtitle">Manage content for the public website</p>
+                </div>
+                <button class="btn btn--primary" id="saveSiteConfigBtn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    Save Changes
+                </button>
+            </div>
 
-        <!-- Toast Container -->
-        <div class="toast-container" id="toastContainer"></div>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showEditorTab('hero')">Hero Section</button>
+                <button class="tab-btn" onclick="showEditorTab('stats')">Stats</button>
+                <button class="tab-btn" onclick="showEditorTab('testimonials')">Testimonials</button>
+                <button class="tab-btn" onclick="showEditorTab('about')">About Us</button>
+            </div>
+
+            <div class="editor-content active" id="editor-hero">
+                <div class="settings-card">
+                    <h3>Hero Section</h3>
+                    <div class="form-group"><label>Headline</label><input type="text" id="heroTitle"
+                            placeholder="Main headline"></div>
+                    <div class="form-group"><label>Subtitle</label><textarea id="heroSubtitle" rows="3"
+                            placeholder="Hero subtitle"></textarea></div>
+                    <div class="form-row-2col">
+                        <div class="form-group"><label>CTA Text</label><input type="text" id="heroCtaText"
+                                placeholder="e.g. Explore Courses"></div>
+                        <div class="form-group"><label>CTA Link</label><input type="text" id="heroCtaLink"
+                                placeholder="e.g. #catalog"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-content" id="editor-stats" style="display:none;">
+                <div class="settings-card">
+                    <h3>Platform Statistics</h3>
+                    <div id="statsList"></div>
+                    <!-- Values are usually fixed in code, but we can make them editable labels -->
+                </div>
+            </div>
+
+            <div class="editor-content" id="editor-testimonials" style="display:none;">
+                <div class="settings-card">
+                    <h3>Testimonials</h3>
+                    <div id="testimonialsList"></div>
+                    <button class="btn btn--outline btn--full" style="margin-top:16px; border-style:dashed;"
+                        onclick="addTestimonialItem()">+ Add Testimonial</button>
+                </div>
+            </div>
+
+            <div class="editor-content" id="editor-about" style="display:none;">
+                <div class="settings-card">
+                    <h3>About Us</h3>
+                    <div class="form-group"><label>Title</label><input type="text" id="aboutTitle"></div>
+                    <div class="form-group"><label>Main Text</label><textarea id="aboutText" rows="4"></textarea></div>
+                    <div class="form-group"><label>Mission Statement</label><textarea id="aboutMission"
+                            rows="3"></textarea></div>
+                </div>
+                <div class="settings-card">
+                    <h3>Contact Info</h3>
+                    <div class="form-group"><label>Support Email</label><input type="email" id="contactEmail"></div>
+                    <div class="form-group"><label>Address</label><input type="text" id="contactAddress"></div>
+                    <div class="form-group"><label>Phone</label><input type="text" id="contactPhone"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent"></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     </div><!-- /adminApp -->
 
